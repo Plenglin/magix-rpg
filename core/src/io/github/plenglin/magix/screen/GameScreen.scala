@@ -51,7 +51,7 @@ class GameScreen extends Screen with InputProcessor {
     logger.finest("drawing")
 
     cam.position.set(GameData.player.pos, 0)
-    cam.zoom = 0.05f
+    cam.zoom = 0.04f
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
     Gdx.gl.glClearColor(0, 0, 0, 1)

@@ -15,7 +15,7 @@ class Goblin(pos: Vector2) extends LivingEntity(pos) with TexturedEntity {
   override var hp: Double = _
   override var speed: Float = 4
 
-  var detectionRadius2 = 100
+  var detectionRadius2 = 64
 
   override def onInit(): Unit = {
     hp = 50

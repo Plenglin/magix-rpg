@@ -8,8 +8,8 @@ class WallTree extends Wall {
   override val durability: Double = 200
   override val name: String = "Tree Trunk"
 
-  val randomXOffset: Int = (math.random * Constants.randomVisualOffset).toInt
-  val randomYOffset: Int = (math.random * Constants.randomVisualOffset).toInt
+  val randomXOffset: Float = (math.random * Constants.randomVisualOffset).toFloat
+  val randomYOffset: Float = (math.random * Constants.randomVisualOffset).toFloat
 
   /**
     * Draw this wall onto a `SpriteBatch`.
@@ -19,6 +19,6 @@ class WallTree extends Wall {
     * @param cellY where the wall is
     */
   override def draw(batch: SpriteBatch, cellX: Int, cellY: Int): Unit = {
-    batch.draw(Assets.tTree, cellX * Constants.cellPixelSize + randomXOffset, cellY * Constants.cellPixelSize + randomYOffset, 1, 2)
+    batch.draw(Assets.tTree, cellX + randomXOffset, cellY + randomYOffset, 1, 2)
   }
 }

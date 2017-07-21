@@ -33,15 +33,13 @@ class World {
 
   def drawTerrain(batch: SpriteBatch): Unit = {
     for (i <- 0 until Constants.worldGridSize; j <- Constants.worldGridSize - 1 to 0 by -1) {
-      var cell = grid(i)(j)
-      cell.terrain.getOrElse(emptyTerrain).draw(batch, i, j)
+      grid(i)(j).terrain.getOrElse(emptyTerrain).draw(batch, i, j)
     }
   }
 
   def drawWall(batch: SpriteBatch): Unit = {
     for (i <- 0 until Constants.worldGridSize; j <- Constants.worldGridSize - 1 to 0 by -1) {
-      var cell = grid(i)(j)
-      cell.wall.getOrElse(emptyWall).draw(batch, i, j)
+      grid(i)(j).wall.getOrElse(emptyWall).draw(batch, i, j)
     }
   }
 

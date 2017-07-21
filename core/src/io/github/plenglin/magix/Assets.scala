@@ -16,7 +16,7 @@ object Assets {
   val dtGrass = new AssetDescriptor[Texture]("sprite/terrain/grass.png", classOf[Texture])
 
   def tPlayer: TextureRegion = {new TextureRegion(manager.get(dtPlayer))}
-  def tGoblin: TextureRegion = {new TextureRegion(manager.get(dtPlayer))}
+  def tGoblin: TextureRegion = {new TextureRegion(manager.get(dtGoblin))}
   def tDirt: TextureRegion = {new TextureRegion(manager.get(dtDirt))}
   def tGrass: TextureRegion = {new TextureRegion(manager.get(dtGrass))}
   def tTree: TextureRegion = {new TextureRegion(manager.get(dtTree))}

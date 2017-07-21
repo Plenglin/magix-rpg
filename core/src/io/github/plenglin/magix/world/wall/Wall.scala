@@ -2,6 +2,9 @@ package io.github.plenglin.magix.world.wall
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
+/**
+  * A wall. There is an instance for every wall.
+  */
 abstract class Wall {
 
   val durability: Double
