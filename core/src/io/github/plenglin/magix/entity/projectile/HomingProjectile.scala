@@ -1,19 +1,26 @@
 package io.github.plenglin.magix.entity.projectile
 
-import io.github.plenglin.magix.Targetable
-import io.github.plenglin.magix.entity.{Entity, TexturedEntity}
-import io.github.plenglin.magix.event.entity.hp.HealthEvent
+import java.util.logging.Logger
 
-abstract class HomingProjectile(val source: Entity, val projectileTarget: Targetable) extends Entity(source.pos.cpy) {
+import io.github.plenglin.magix.Damageable
+import io.github.plenglin.magix.entity.Entity
+import io.github.plenglin.magix.event.health.{DestroyEvent, HealthChangeEvent}
+
+abstract class HomingProjectile(val source: Entity, val projectileTarget: Damageable) extends Entity(source.pos.cpy) {
+
+  private val logger = Logger.getLogger(getClass.getName)
 
   var damage: Double
+  var hitRadius2: Float
 
   override def onUpdate(dt: Float): Unit = {
+    target.set(projectileTarget.pos)
     moveTowardsTarget(dt)
-  }
-
-  override def onDestroy(): Unit = projectileTarget match {
-    case e: Entity => e.eventQueue += new HealthEvent(damage, this)
+    if (pos.dst2(projectileTarget.pos) < hitRadius2) {
+      logger.info(s"$this hit, destroying target")
+      this.damageQueue += new DestroyEvent()
+      projectileTarget.damageQueue += new HealthChangeEvent(-damage, this)
+    }
   }
 
 }

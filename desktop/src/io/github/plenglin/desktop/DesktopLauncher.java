@@ -15,10 +15,9 @@ public class DesktopLauncher {
 
 		LogManager.getLogManager().getLogger(Logger.GLOBAL_LOGGER_NAME).setLevel(Level.FINEST);
 
-		for (String a: arg){
-		    System.out.println(a);
-        }
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.width = 1280;
+		config.height = 720;
 		new LwjglApplication(new Magix(), config);
 	}
 }

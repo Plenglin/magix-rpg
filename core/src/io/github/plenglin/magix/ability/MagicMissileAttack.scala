@@ -1,17 +1,20 @@
 package io.github.plenglin.magix.ability
 import io.github.plenglin.magix.{Damageable, Targetable}
 import io.github.plenglin.magix.entity.Entity
-import io.github.plenglin.magix.entity.projectile.{MagicMissileProjectile, HomingProjectile}
+import io.github.plenglin.magix.entity.humanoid.Player
+import io.github.plenglin.magix.entity.projectile.{HomingProjectile, MagicMissileProjectile}
 
 class MagicMissileAttack(source: Entity) extends TargetedProjectileAttack(source) {
   override val cooldown: Float = 10
 
   override def generateProjectile(target: Targetable): HomingProjectile = {
-    new MagicMissileProjectile(source, target)
+    new MagicMissileProjectile(source, target.asInstanceOf[Damageable])
   }
 
-  override def canTarget(target: Option[Targetable]): Boolean = {
-    true
+  override def canTarget(target: Targetable): Boolean = target match {
+    case _: Player => false
+    case _: Damageable => true
+    case _ => false
   }
 
 }

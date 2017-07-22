@@ -3,6 +3,8 @@ package io.github.plenglin.magix
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector2
 
+import scala.collection.mutable
+
 trait Targetable {
 
   /**

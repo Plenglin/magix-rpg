@@ -15,7 +15,7 @@ object GameData {
   var entities: ListBuffer[Entity] = _
   var player: Player = _
   def targetable: mutable.Iterable[Targetable] = {
-    entities.map(_.asInstanceOf[Targetable])
+    entities.map(_.asInstanceOf[Targetable]) ++ world.walls
   }
 
   var world: World = _

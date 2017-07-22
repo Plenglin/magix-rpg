@@ -11,7 +11,7 @@ class Player(pos: Vector2) extends Entity(pos) with TexturedEntity {
   override var texture: TextureRegion = Assets.tPlayer
   override var baseHP: Double = 100
   override var speed: Float = 5
-  override val targetRadius2: Float = 256
+  override val targetRadius2: Float = 1
 
   override def onInit(): Unit = {
     abilities += new MagicMissileAttack(this)

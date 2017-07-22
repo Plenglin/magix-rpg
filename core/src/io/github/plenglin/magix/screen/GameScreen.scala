@@ -10,7 +10,7 @@ import com.badlogic.gdx.{Gdx, Input, InputProcessor, Screen}
 import io.github.plenglin.magix.entity.humanoid.Goblin
 import io.github.plenglin.magix.world.terrain.TerrainDirt
 import io.github.plenglin.magix.world.wall.WallTree
-import io.github.plenglin.magix.{Constants, GameData}
+import io.github.plenglin.magix.{Constants, Damageable, GameData}
 
 class GameScreen extends Screen with InputProcessor {
 
@@ -37,7 +37,7 @@ class GameScreen extends Screen with InputProcessor {
     })
 
     logger.info("adding goblins...")
-    for (_ <- 0 until 10) {
+    for (_ <- 0 until 30) {
       var goblin = new Goblin(new Vector2(math.random.toFloat, math.random.toFloat).scl(Constants.worldGridSize))
       goblin.onInit()
       GameData.entities += goblin
@@ -49,12 +49,15 @@ class GameScreen extends Screen with InputProcessor {
   override def render(delta: Float): Unit = {
 
     logger.finest(s"updating, dt=$delta")
+
+    GameData.targetable.filter(_.isInstanceOf[Damageable]).map(_.asInstanceOf[Damageable]).foreach{_.processDamageQueue()}
+
     GameData.entities.foreach{_.onUpdate(delta)}
 
     logger.finest("drawing")
 
     cam.position.set(GameData.player.pos, 0)
-    cam.zoom = 0.04f
+    cam.zoom = 3/128f
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
     Gdx.gl.glClearColor(0, 0, 0, 1)
@@ -105,8 +108,8 @@ class GameScreen extends Screen with InputProcessor {
     val posOnScreen = new Vector2(posOnScreen3.x, posOnScreen3.y)
     logger.info(s"Player clicked: ($mx, $my); Unprojected: $posOnScreen")
     button match {
-      case Buttons.RIGHT => GameData.player.target.set(posOnScreen.x, posOnScreen.y)
-      case Buttons.LEFT => GameData.player.abilities.head.trigger(mouseVec)
+      case Buttons.RIGHT => GameData.player.target.set(posOnScreen)
+      case Buttons.LEFT => GameData.player.abilities.head.trigger(posOnScreen)
     }
     true
   }

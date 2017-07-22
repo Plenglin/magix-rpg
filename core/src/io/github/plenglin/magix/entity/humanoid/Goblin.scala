@@ -17,7 +17,7 @@ class Goblin(pos: Vector2) extends Entity(pos) with TexturedEntity {
   override var baseHP: Double = 50
   override var speed: Float = 4
   override val name = "Goblin"
-  override val targetRadius2: Float = 256
+  override val targetRadius2: Float = 1
 
   var detectionRadius2 = 64
 

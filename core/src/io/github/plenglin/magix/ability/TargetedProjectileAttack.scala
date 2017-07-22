@@ -5,7 +5,7 @@ import java.util.NoSuchElementException
 import com.badlogic.gdx.math.Vector2
 import io.github.plenglin.magix.entity.Entity
 import io.github.plenglin.magix.entity.projectile.HomingProjectile
-import io.github.plenglin.magix.{Damageable, Targetable}
+import io.github.plenglin.magix.{Damageable, GameData, Targetable}
 
 abstract class TargetedProjectileAttack(source: Entity) extends TargetedAbility(source) {
 
@@ -15,7 +15,7 @@ abstract class TargetedProjectileAttack(source: Entity) extends TargetedAbility(
     target match {
       case d: Damageable => {
         val proj = generateProjectile(d)
-
+        GameData.addEntity(proj)
       }
       case _ => throw new InvalidTargetException(Option(target))
     }

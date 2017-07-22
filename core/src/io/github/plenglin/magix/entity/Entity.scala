@@ -58,7 +58,9 @@ abstract class Entity(var pos: Vector2) extends DamageSource with Damageable {
     */
   def onDestroy() {}
 
-  def destroy(): Unit = {
+  override def destroy(): Unit = {
+    logger.info(s"destroying $this")
+    super.destroy()
     onDestroy()
     GameData.entities -= this
   }
@@ -75,11 +77,13 @@ abstract class Entity(var pos: Vector2) extends DamageSource with Damageable {
   def processEventQueue(): Unit = {
     while (eventQueue.nonEmpty) {
       val event = eventQueue.dequeue()
+      logger.info(s"$this triggered event ${event}")
       val result = this.onEntityEvent(event)
       if (result) {
         event.onTrigger(this)
       }
     }
+    processDamageQueue()
   }
 
   /**

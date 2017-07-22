@@ -30,6 +30,9 @@ object Assets {
   val toLoad = Array(
     dtPlayer,
     dtGoblin,
+
+    dtMagicMissile,
+
     dtDirt,
     dtTree,
     dtGrass

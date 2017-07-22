@@ -14,15 +14,17 @@ abstract class TargetedAbility(source: Entity) extends Ability {
 
   private val logger = Logger.getLogger(getClass.getName)
 
-  def canTarget(target: Option[Targetable]): Boolean
+  def canTarget(target: Targetable): Boolean
 
   def onTriggered(target: Targetable)
 
   override def trigger(mousePos: Vector2): Unit = {
     val possibleTargets = GameData.targetable.filter(e =>
       e.pos.cpy().sub(mousePos).len2() < e.targetRadius2 &&  // Mouse within radius
-        canTarget(Option(e)))  // Allowed to target
-    logger.info(s"${possibleTargets.toList.toString()}")
+        canTarget(e))  // Allowed to target
+    if (possibleTargets.nonEmpty) {
+      onTriggered(possibleTargets.head)
+    }
   }
 
 }
