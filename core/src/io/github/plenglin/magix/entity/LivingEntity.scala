@@ -1,7 +1,7 @@
 package io.github.plenglin.magix.entity
 
 import com.badlogic.gdx.math.Vector2
-import io.github.plenglin.magix.effect.LivingEntityEffect
+import io.github.plenglin.magix.effect.EntityEffect
 
 import scala.collection.mutable.ListBuffer
 
@@ -12,7 +12,7 @@ import scala.collection.mutable.ListBuffer
   */
 abstract class LivingEntity(pos: Vector2) extends Entity(pos) {
 
-  var effects: ListBuffer[LivingEntityEffect] = ListBuffer()
+  var effects: ListBuffer[EntityEffect] = ListBuffer()
 
   var baseHP: Double
   var baseArmor: Double = 0

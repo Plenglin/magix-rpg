@@ -5,8 +5,9 @@ import java.util.logging.Logger
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import io.github.plenglin.magix.Constants
-import io.github.plenglin.magix.effect.LivingEntityEffect
-import io.github.plenglin.magix.event.Event
+import io.github.plenglin.magix.effect.EntityEffect
+import io.github.plenglin.magix.event.EntityEvent
+import io.github.plenglin.magix.event.entity.{DamageSource, EntityEvent}
 
 import scala.collection.mutable.ListBuffer
 
@@ -14,7 +15,7 @@ import scala.collection.mutable.ListBuffer
   * Something that can move
   * @param pos where it is
   */
-abstract class Entity(var pos: Vector2) {
+abstract class Entity(var pos: Vector2) extends DamageSource {
 
   private val logger = Logger.getLogger(getClass.getName)
 
@@ -27,7 +28,7 @@ abstract class Entity(var pos: Vector2) {
 
   def onDestroy()
 
-  def onEvent(event: Event)
+  def onEvent(event: EntityEvent)
 
   def draw(batch: SpriteBatch)
 

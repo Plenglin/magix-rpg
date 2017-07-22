@@ -1,12 +1,14 @@
 package io.github.plenglin.magix.effect
 
-import io.github.plenglin.magix.entity.LivingEntity
+import io.github.plenglin.magix.entity.Entity
 
 /**
   * An effect that can be applied to a `LivingEntity`.
   * @param target
   */
-abstract class LivingEntityEffect(var target: LivingEntity) {
+abstract class EntityEffect(var target: Entity) {
+
+  val hidden: Boolean  // Whether this effect is to be displayed to the user
 
   def onAdded(): Unit
 

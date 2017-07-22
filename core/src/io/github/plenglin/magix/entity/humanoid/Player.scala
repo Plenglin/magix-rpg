@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.{SpriteBatch, TextureRegion}
 import com.badlogic.gdx.math.Vector2
 import io.github.plenglin.magix.Assets
 import io.github.plenglin.magix.entity.{LivingEntity, TexturedEntity}
-import io.github.plenglin.magix.event.Event
+import io.github.plenglin.magix.event.entity.EntityEvent
 
 class Player(pos: Vector2) extends LivingEntity(pos) with TexturedEntity {
 
@@ -23,7 +23,7 @@ class Player(pos: Vector2) extends LivingEntity(pos) with TexturedEntity {
     moveTowardsTarget(dt)
   }
 
-  override def onEvent(event: Event): Unit = {
+  override def onEvent(event: EntityEvent): Unit = {
 
   }
 
