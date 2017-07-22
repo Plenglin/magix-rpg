@@ -7,8 +7,8 @@ trait TexturedWall extends Wall {
 
   val texture: TextureRegion
 
-  override def draw(batch: SpriteBatch, cellX: Int, cellY: Int): Unit = {
-    batch.draw(texture, cellX, cellY, 1, 1)
+  override def draw(batch: SpriteBatch): Unit = {
+    batch.draw(texture, i, j, 1, 1)
   }
 
 }

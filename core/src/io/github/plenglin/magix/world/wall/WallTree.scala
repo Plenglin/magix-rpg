@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import io.github.plenglin.magix.{Assets, Constants}
 
-class WallTree extends Wall {
-  override val durability: Double = 200
+class WallTree(i: Int, j: Int) extends Wall(i, j) {
+  override val maxHP: Double = 200
   override val name: String = "Tree Trunk"
 
   val randomXOffset: Float = (math.random * Constants.randomVisualOffset).toFloat
@@ -18,7 +18,8 @@ class WallTree extends Wall {
     * @param cellX where the wall is
     * @param cellY where the wall is
     */
-  override def draw(batch: SpriteBatch, cellX: Int, cellY: Int): Unit = {
-    batch.draw(Assets.tTree, cellX + randomXOffset, cellY + randomYOffset, 1, 2)
+  override def draw(batch: SpriteBatch): Unit = {
+    batch.draw(Assets.tTree, i + randomXOffset, j + randomYOffset, 1, 2)
   }
+
 }

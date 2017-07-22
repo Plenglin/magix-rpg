@@ -1,24 +1,27 @@
 package io.github.plenglin.magix.world.wall
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.Vector2
+import io.github.plenglin.magix.{Damageable, Targetable}
 
 /**
   * A wall. There is an instance for every wall.
+  * @param i horizontal cell coordinate
+  * @param j vertial cell coordinate
   */
-abstract class Wall {
+abstract class Wall(val i: Int, val j: Int) extends Damageable {
 
-  val durability: Double
+  val pos: Vector2 = new Vector2(i, j)
+  val targetRadius2: Float = 100
 
   val name: String
 
-  var hp: Double = durability
+  override var hp: Double = maxHP
 
   /**
     * Draw this wall onto a `SpriteBatch`.
     * @param batch the batch to draw onto
-    * @param cellX where the wall is
-    * @param cellY where the wall is
     */
-  def draw(batch: SpriteBatch, cellX: Int, cellY: Int): Unit
+  def draw(batch: SpriteBatch): Unit
 
 }

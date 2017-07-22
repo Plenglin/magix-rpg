@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.{SpriteBatch, TextureRegion}
 import com.badlogic.gdx.math.Vector2
 import io.github.plenglin.magix.{Assets, GameData}
-import io.github.plenglin.magix.entity.{LivingEntity, TexturedEntity}
+import io.github.plenglin.magix.entity.{Entity, TexturedEntity}
 import io.github.plenglin.magix.event.entity.EntityEvent
 
-class Goblin(pos: Vector2) extends LivingEntity(pos) with TexturedEntity {
+class Goblin(pos: Vector2) extends Entity(pos) with TexturedEntity {
   override var texture: TextureRegion = Assets.tGoblin
 
   override var baseHP: Double = 50
@@ -34,7 +34,7 @@ class Goblin(pos: Vector2) extends LivingEntity(pos) with TexturedEntity {
 
   }
 
-  override def onEvent(event: EntityEvent): Unit = {
+  override def onEntityEvent(event: EntityEvent): Unit = {
 
   }
 

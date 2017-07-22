@@ -4,33 +4,101 @@ import java.util.logging.Logger
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import io.github.plenglin.magix.Constants
+import io.github.plenglin.magix.ability.Ability
 import io.github.plenglin.magix.effect.EntityEffect
-import io.github.plenglin.magix.event.EntityEvent
 import io.github.plenglin.magix.event.entity.{DamageSource, EntityEvent}
+import io.github.plenglin.magix.event.global.GlobalEvent
+import io.github.plenglin.magix.{Constants, Damageable, GameData}
 
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
-  * Something that can move
+  * An entity with a health bar.
   * @param pos where it is
   */
-abstract class Entity(var pos: Vector2) extends DamageSource {
+abstract class Entity(var pos: Vector2) extends DamageSource with Damageable {
 
   private val logger = Logger.getLogger(getClass.getName)
+
+  var abilities: ListBuffer[Ability] = ListBuffer()
+  var effects: ListBuffer[EntityEffect] = ListBuffer()
+
+  var eventQueue: mutable.Queue[EntityEvent] = mutable.Queue()
 
   var target: Vector2 = pos.cpy
   var speed: Float
 
+  var baseHP: Double
+  var baseArmor: Double = 0
+  var hp: Double = _
+
+  def maxHP: Double = baseHP * effects.map(_.coeffHP).product + effects.map(_.addedHP).sum
+
+  def armor: Double = baseArmor + effects.map(_.addedArmor).sum
+
+  def init(): Unit = {
+    this.hp = this.maxHP()
+    onInit()
+  }
+
+  /**
+    * Called after the entity is initialized.
+    */
   def onInit()
 
+  /**
+    * Called every single loop.
+    * @param dt
+    */
   def onUpdate(dt: Float)
 
+  /**
+    * Called immediately before the entity's imminent destruction.
+    */
   def onDestroy()
 
-  def onEvent(event: EntityEvent)
+  def destroy(): Unit = {
+    onDestroy()
+    GameData.entities -= this
+  }
+
+  /**
+    * Called immediately before each event is processed.
+    * @param event the event
+    * @return whether the event should apply or not.
+    */
+  def onEntityEvent(event: EntityEvent): Boolean = {
+    true
+  }
+
+  def processEventQueue(): Unit = {
+    while (eventQueue.nonEmpty) {
+      val event = eventQueue.dequeue()
+      val result = this.onEntityEvent(event)
+      if (result) {
+        event.onTrigger(this)
+      }
+    }
+  }
+
+  /**
+    * Called immediately before a global event is triggered.
+    * @param event the event
+    */
+  def onGlobalEvent(event: GlobalEvent): Unit = {
+
+  }
 
   def draw(batch: SpriteBatch)
+
+  def maxHP(): Double = {
+    baseHP + effects.map{_.addedHP()}.sum
+  }
+
+  def armor(): Double = {
+    baseArmor + effects.map{_.addedArmor()}.sum
+  }
 
   /**
     * Move towards the target in this current frame.
