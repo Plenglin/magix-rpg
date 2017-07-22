@@ -2,6 +2,7 @@ package io.github.plenglin.magix.screen
 
 import java.util.logging.Logger
 
+import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
 import com.badlogic.gdx.math.{Vector2, Vector3}
@@ -23,17 +24,19 @@ class GameScreen extends Screen with InputProcessor {
     batch = new SpriteBatch()
     cam = new OrthographicCamera()
 
+    logger.info("resetting game...")
     GameData.reset()
     GameData.world.doGeneration((w) => {
       for (i <- 0 until Constants.worldGridSize; j <- 0 until Constants.worldGridSize) {
         val cell = w.grid(i)(j)
         cell.terrain = Option(new TerrainDirt())
         if (Math.random() < 0.125) {
-          cell.wall = Option(new WallTree())
+          cell.wall = Option(new WallTree(i, j))
         }
       }
     })
 
+    logger.info("adding goblins...")
     for (_ <- 0 until 10) {
       var goblin = new Goblin(new Vector2(math.random.toFloat, math.random.toFloat).scl(Constants.worldGridSize))
       goblin.onInit()
@@ -97,10 +100,13 @@ class GameScreen extends Screen with InputProcessor {
   override def touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean = {
     val mx = screenX
     val my = Gdx.graphics.getHeight - screenY
-    val posOnScreen = cam.unproject(new Vector3(screenX, screenY, 0))
+    val mouseVec = new Vector2(mx, my)
+    val posOnScreen3 = cam.unproject(new Vector3(screenX, screenY, 0))
+    val posOnScreen = new Vector2(posOnScreen3.x, posOnScreen3.y)
     logger.info(s"Player clicked: ($mx, $my); Unprojected: $posOnScreen")
-    if (button == Input.Buttons.RIGHT) {
-      GameData.player.target.set(posOnScreen.x, posOnScreen.y)
+    button match {
+      case Buttons.RIGHT => GameData.player.target.set(posOnScreen.x, posOnScreen.y)
+      case Buttons.LEFT => GameData.player.abilities.head.trigger(mouseVec)
     }
     true
   }

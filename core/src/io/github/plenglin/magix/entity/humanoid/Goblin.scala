@@ -1,19 +1,23 @@
 package io.github.plenglin.magix.entity.humanoid
 
-import com.badlogic.gdx.assets.AssetDescriptor
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.{SpriteBatch, TextureRegion}
+import java.util.logging.Logger
+
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import io.github.plenglin.magix.{Assets, GameData}
 import io.github.plenglin.magix.entity.{Entity, TexturedEntity}
 import io.github.plenglin.magix.event.entity.EntityEvent
+import io.github.plenglin.magix.{Assets, GameData}
 
 class Goblin(pos: Vector2) extends Entity(pos) with TexturedEntity {
+
+  private val logger = Logger.getLogger(getClass.getName)
+
   override var texture: TextureRegion = Assets.tGoblin
 
   override var baseHP: Double = 50
-  override var hp: Double = _
   override var speed: Float = 4
+  override val name = "Goblin"
+  override val targetRadius2: Float = 256
 
   var detectionRadius2 = 64
 
@@ -34,8 +38,8 @@ class Goblin(pos: Vector2) extends Entity(pos) with TexturedEntity {
 
   }
 
-  override def onEntityEvent(event: EntityEvent): Unit = {
-
+  override def onEntityEvent(event: EntityEvent): Boolean = {
+    true
   }
 
 }

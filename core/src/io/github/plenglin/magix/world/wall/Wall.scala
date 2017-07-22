@@ -12,7 +12,7 @@ import io.github.plenglin.magix.{Damageable, Targetable}
 abstract class Wall(val i: Int, val j: Int) extends Damageable {
 
   val pos: Vector2 = new Vector2(i, j)
-  val targetRadius2: Float = 100
+  override val targetRadius2: Float = 100
 
   val name: String
 

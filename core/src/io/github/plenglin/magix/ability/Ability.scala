@@ -1,21 +1,21 @@
 package io.github.plenglin.magix.ability
 
-import io.github.plenglin.magix.Targetable
-import io.github.plenglin.magix.entity.Entity
-
+import com.badlogic.gdx.math.Vector2
 
 /**
   * Something that an entity can activate.
   */
-abstract class Ability(source: Entity) {
+abstract class Ability {
 
   /**
     * Period, in seconds, between attacks
     */
-  val cooldown: Float
+  def cooldown: Float
 
-  def canTarget(target: Option[Targetable]): Boolean
-
-  def onTriggered(target: Option[Targetable])
+  /**
+    * Called when the ability is triggered.
+    * @param mousePos Where the mouse is pointing when this occurs, in <b>screen</b> coordinates.
+    */
+  def trigger(mousePos: Vector2)
 
 }

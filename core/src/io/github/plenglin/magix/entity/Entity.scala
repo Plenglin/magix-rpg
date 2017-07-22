@@ -4,7 +4,7 @@ import java.util.logging.Logger
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import io.github.plenglin.magix.ability.Ability
+import io.github.plenglin.magix.ability.TargetedAbility
 import io.github.plenglin.magix.effect.EntityEffect
 import io.github.plenglin.magix.event.entity.{DamageSource, EntityEvent}
 import io.github.plenglin.magix.event.global.GlobalEvent
@@ -21,7 +21,7 @@ abstract class Entity(var pos: Vector2) extends DamageSource with Damageable {
 
   private val logger = Logger.getLogger(getClass.getName)
 
-  var abilities: ListBuffer[Ability] = ListBuffer()
+  var abilities: ListBuffer[TargetedAbility] = ListBuffer()
   var effects: ListBuffer[EntityEffect] = ListBuffer()
 
   var eventQueue: mutable.Queue[EntityEvent] = mutable.Queue()
@@ -33,30 +33,30 @@ abstract class Entity(var pos: Vector2) extends DamageSource with Damageable {
   var baseArmor: Double = 0
   var hp: Double = _
 
-  def maxHP: Double = baseHP * effects.map(_.coeffHP).product + effects.map(_.addedHP).sum
+  override def maxHP: Double = baseHP * effects.map(_.coeffHP).product + effects.map(_.addedHP).sum
 
-  def armor: Double = baseArmor + effects.map(_.addedArmor).sum
+  override def armor: Double = baseArmor + effects.map(_.addedArmor).sum
 
   def init(): Unit = {
-    this.hp = this.maxHP()
+    this.hp = this.maxHP
     onInit()
   }
 
   /**
     * Called after the entity is initialized.
     */
-  def onInit()
+  def onInit() {}
 
   /**
     * Called every single loop.
     * @param dt
     */
-  def onUpdate(dt: Float)
+  def onUpdate(dt: Float) {}
 
   /**
     * Called immediately before the entity's imminent destruction.
     */
-  def onDestroy()
+  def onDestroy() {}
 
   def destroy(): Unit = {
     onDestroy()
@@ -92,14 +92,6 @@ abstract class Entity(var pos: Vector2) extends DamageSource with Damageable {
 
   def draw(batch: SpriteBatch)
 
-  def maxHP(): Double = {
-    baseHP + effects.map{_.addedHP()}.sum
-  }
-
-  def armor(): Double = {
-    baseArmor + effects.map{_.addedArmor()}.sum
-  }
-
   /**
     * Move towards the target in this current frame.
     * @param dt the delta between frames
@@ -110,7 +102,7 @@ abstract class Entity(var pos: Vector2) extends DamageSource with Damageable {
     if (displacement.len2() >= Constants.movementThreshold2) {
       displacement.nor.scl(-speed * dt)
       pos.add(displacement)
-      logger.info(s"displacement: $displacement; magnitude: ${displacement.len()},new pos: $pos")
+      logger.fine(s"displacement: $displacement; magnitude: ${displacement.len()},new pos: $pos")
       return true
     }
     false

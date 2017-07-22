@@ -1,29 +1,19 @@
 package io.github.plenglin.magix.world
 
+import java.util.NoSuchElementException
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.sun.xml.internal.bind.v2.model.core.NonElement
 import io.github.plenglin.magix.Constants
 import io.github.plenglin.magix.world.terrain.Terrain
 import io.github.plenglin.magix.world.wall.Wall
 
 class World {
 
-  private val emptyWall = new Wall {
-    override def draw(batch: SpriteBatch, cellX: Int, cellY: Int): Unit = {}
-
-    override val durability: Double = 0
-    override val name: String = "empty"
-  }
-
-  private val emptyTerrain = new Terrain {
-    override def draw(batch: SpriteBatch, cellX: Int, cellY: Int): Unit = {}
-    override val name: String = "empty"
-    override val speed: Double = 1
-  }
-
   val grid: Array[Array[WorldCell]] = Array.ofDim(Constants.worldGridSize, Constants.worldGridSize)
 
   for (i <- 0 until Constants.worldGridSize; j <- 0 until Constants.worldGridSize) {
-    grid(i)(j) = new WorldCell(None, None)
+    grid(i)(j) = new WorldCell(i, j, None, None)
   }
 
 
@@ -32,16 +22,14 @@ class World {
   }
 
   def drawTerrain(batch: SpriteBatch): Unit = {
-    for (i <- 0 until Constants.worldGridSize; j <- Constants.worldGridSize - 1 to 0 by -1) {
-      grid(i)(j).terrain.getOrElse(emptyTerrain).draw(batch, i, j)
-    }
+    cells.foreach(c => c.terrain.get.draw(batch, c.i, c.j))
   }
 
   def drawWall(batch: SpriteBatch): Unit = {
-    for (i <- 0 until Constants.worldGridSize; j <- Constants.worldGridSize - 1 to 0 by -1) {
-      grid(i)(j).wall.getOrElse(emptyWall).draw(batch, i, j)
-    }
+    walls.foreach(_.draw(batch))
   }
 
+  def cells: Iterable[WorldCell] = grid.flatMap(j => j)
 
+  def walls: Iterable[Wall] = cells.filter(_.wall.isDefined).map(_.wall.get)
 }

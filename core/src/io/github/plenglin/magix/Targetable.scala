@@ -12,9 +12,10 @@ trait Targetable {
   def pos: Vector2
 
   /**
-    * How far from the mouse this object can be and still be flagged as targeted, in screen distance squared
+    * How far from the mouse this object can be and still be flagged as targeted, in screen distance squared. 0 for non-
+    * targetable.
     * @return
     */
-  def targetRadius2: Float
+  val targetRadius2: Float = 0
 
 }

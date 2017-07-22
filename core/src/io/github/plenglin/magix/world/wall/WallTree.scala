@@ -7,6 +7,7 @@ import io.github.plenglin.magix.{Assets, Constants}
 class WallTree(i: Int, j: Int) extends Wall(i, j) {
   override val maxHP: Double = 200
   override val name: String = "Tree Trunk"
+  override val targetRadius2: Float = 1
 
   val randomXOffset: Float = (math.random * Constants.randomVisualOffset).toFloat
   val randomYOffset: Float = (math.random * Constants.randomVisualOffset).toFloat
@@ -15,8 +16,6 @@ class WallTree(i: Int, j: Int) extends Wall(i, j) {
     * Draw this wall onto a `SpriteBatch`.
     *
     * @param batch the batch to draw onto
-    * @param cellX where the wall is
-    * @param cellY where the wall is
     */
   override def draw(batch: SpriteBatch): Unit = {
     batch.draw(Assets.tTree, i + randomXOffset, j + randomYOffset, 1, 2)
