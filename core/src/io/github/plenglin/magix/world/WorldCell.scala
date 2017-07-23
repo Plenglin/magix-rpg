@@ -1,7 +1,5 @@
 package io.github.plenglin.magix.world
 
-import java.util.NoSuchElementException
-
 import io.github.plenglin.magix.world.terrain.Terrain
 import io.github.plenglin.magix.world.wall.Wall
 

@@ -1,11 +1,7 @@
 package io.github.plenglin.magix.world
 
-import java.util.NoSuchElementException
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.sun.xml.internal.bind.v2.model.core.NonElement
 import io.github.plenglin.magix.Constants
-import io.github.plenglin.magix.world.terrain.Terrain
 import io.github.plenglin.magix.world.wall.Wall
 
 class World {

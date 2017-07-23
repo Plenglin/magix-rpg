@@ -1,6 +1,4 @@
 package io.github.plenglin.magix.world.wall
-import com.badlogic.gdx.assets.AssetDescriptor
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import io.github.plenglin.magix.{Assets, Constants}
 
@@ -21,4 +19,5 @@ class WallTree(i: Int, j: Int) extends Wall(i, j) {
     batch.draw(Assets.tTree, i + randomXOffset, j + randomYOffset, 1, 2)
   }
 
+  override def layer: Float = j
 }

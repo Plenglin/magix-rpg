@@ -2,9 +2,9 @@ package io.github.plenglin.magix.entity.projectile
 
 import java.util.logging.Logger
 
-import io.github.plenglin.magix.Damageable
 import io.github.plenglin.magix.entity.Entity
 import io.github.plenglin.magix.event.health.{DestroyEvent, HealthChangeEvent}
+import io.github.plenglin.magix.types.Damageable
 
 abstract class HomingProjectile(val source: Entity, val projectileTarget: Damageable) extends Entity(source.pos.cpy) {
 

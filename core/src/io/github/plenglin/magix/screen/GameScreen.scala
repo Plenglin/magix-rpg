@@ -6,11 +6,12 @@ import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
 import com.badlogic.gdx.math.{Vector2, Vector3}
-import com.badlogic.gdx.{Gdx, Input, InputProcessor, Screen}
+import com.badlogic.gdx.{Gdx, InputProcessor, Screen}
 import io.github.plenglin.magix.entity.humanoid.Goblin
+import io.github.plenglin.magix.types.Damageable
 import io.github.plenglin.magix.world.terrain.TerrainDirt
 import io.github.plenglin.magix.world.wall.WallTree
-import io.github.plenglin.magix.{Constants, Damageable, GameData}
+import io.github.plenglin.magix.{Constants, GameData}
 
 class GameScreen extends Screen with InputProcessor {
 
@@ -50,7 +51,7 @@ class GameScreen extends Screen with InputProcessor {
 
     logger.finest(s"updating, dt=$delta")
 
-    GameData.targetable.filter(_.isInstanceOf[Damageable]).map(_.asInstanceOf[Damageable]).foreach{_.processDamageQueue()}
+    GameData.targetables.filter(_.isInstanceOf[Damageable]).map(_.asInstanceOf[Damageable]).foreach{_.processDamageQueue()}
 
     GameData.entities.foreach{_.onUpdate(delta)}
 
@@ -66,8 +67,7 @@ class GameScreen extends Screen with InputProcessor {
     batch.setProjectionMatrix(cam.combined)
     batch.begin()
     GameData.world.drawTerrain(batch)
-    GameData.entities.foreach{_.draw(batch)}
-    GameData.world.drawWall(batch)
+    GameData.drawables.sortBy(-_.layer).foreach{_.draw(batch)}
     batch.end()
 
   }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2
 import io.github.plenglin.magix.entity.Entity
 import io.github.plenglin.magix.entity.humanoid.Player
 import io.github.plenglin.magix.event.global.GlobalEvent
+import io.github.plenglin.magix.types.{Drawable, Targetable}
 import io.github.plenglin.magix.world.World
 
 import scala.collection.mutable
@@ -14,8 +15,11 @@ object GameData {
   var eventQueue: mutable.Queue[GlobalEvent] = mutable.Queue()
   var entities: ListBuffer[Entity] = _
   var player: Player = _
-  def targetable: mutable.Iterable[Targetable] = {
+  def targetables: mutable.Iterable[Targetable] = {
     entities.map(_.asInstanceOf[Targetable]) ++ world.walls
+  }
+  def drawables: mutable.Seq[Drawable] = {
+    entities.map(_.asInstanceOf[Drawable]) ++ world.walls
   }
 
   var world: World = _

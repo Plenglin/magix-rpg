@@ -2,13 +2,13 @@ package io.github.plenglin.magix.entity
 
 import java.util.logging.Logger
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import io.github.plenglin.magix.ability.TargetedAbility
 import io.github.plenglin.magix.effect.EntityEffect
 import io.github.plenglin.magix.event.entity.{DamageSource, EntityEvent}
 import io.github.plenglin.magix.event.global.GlobalEvent
-import io.github.plenglin.magix.{Constants, Damageable, GameData}
+import io.github.plenglin.magix.types.{Damageable, Drawable}
+import io.github.plenglin.magix.{Constants, GameData}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -17,7 +17,7 @@ import scala.collection.mutable.ListBuffer
   * An entity with a health bar.
   * @param pos where it is
   */
-abstract class Entity(var pos: Vector2) extends DamageSource with Damageable {
+abstract class Entity(var pos: Vector2) extends DamageSource with Damageable with Drawable {
 
   private val logger = Logger.getLogger(getClass.getName)
 
@@ -77,7 +77,7 @@ abstract class Entity(var pos: Vector2) extends DamageSource with Damageable {
   def processEventQueue(): Unit = {
     while (eventQueue.nonEmpty) {
       val event = eventQueue.dequeue()
-      logger.info(s"$this triggered event ${event}")
+      logger.info(s"$this triggered event $event")
       val result = this.onEntityEvent(event)
       if (result) {
         event.onTrigger(this)
@@ -93,8 +93,6 @@ abstract class Entity(var pos: Vector2) extends DamageSource with Damageable {
   def onGlobalEvent(event: GlobalEvent): Unit = {
 
   }
-
-  def draw(batch: SpriteBatch)
 
   /**
     * Move towards the target in this current frame.

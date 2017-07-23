@@ -2,10 +2,10 @@ package io.github.plenglin.magix.ability
 
 import java.util.NoSuchElementException
 
-import com.badlogic.gdx.math.Vector2
+import io.github.plenglin.magix.GameData
 import io.github.plenglin.magix.entity.Entity
 import io.github.plenglin.magix.entity.projectile.HomingProjectile
-import io.github.plenglin.magix.{Damageable, GameData, Targetable}
+import io.github.plenglin.magix.types.{Damageable, Targetable}
 
 abstract class TargetedProjectileAttack(source: Entity) extends TargetedAbility(source) {
 

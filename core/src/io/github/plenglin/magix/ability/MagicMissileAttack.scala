@@ -1,8 +1,8 @@
 package io.github.plenglin.magix.ability
-import io.github.plenglin.magix.{Damageable, Targetable}
 import io.github.plenglin.magix.entity.Entity
 import io.github.plenglin.magix.entity.humanoid.Player
 import io.github.plenglin.magix.entity.projectile.{HomingProjectile, MagicMissileProjectile}
+import io.github.plenglin.magix.types.{Damageable, Targetable}
 
 class MagicMissileAttack(source: Entity) extends TargetedProjectileAttack(source) {
   override val cooldown: Float = 10

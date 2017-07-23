@@ -1,4 +1,4 @@
-package io.github.plenglin.magix
+package io.github.plenglin.magix.types
 
 import java.util.logging.Logger
 
