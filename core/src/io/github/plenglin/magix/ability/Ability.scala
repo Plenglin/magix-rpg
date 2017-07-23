@@ -1,11 +1,14 @@
 package io.github.plenglin.magix.ability
 
-import com.badlogic.gdx.math.Vector2
+import io.github.plenglin.magix.entity.Entity
+import io.github.plenglin.magix.event.entity.DamageSource
 
 /**
   * Something that an entity can activate.
   */
-abstract class Ability {
+abstract class Ability extends DamageSource {
+
+  var source: Entity = _
 
   /**
     * Period, in seconds, between attacks
@@ -13,9 +16,10 @@ abstract class Ability {
   def cooldown: Float
 
   /**
-    * Called when the ability is triggered.
-    * @param mousePos Where the mouse is pointing when this occurs, in <b>game</b> coordinates.
+    * Called when added to the entity.
     */
-  def trigger(mousePos: Vector2)
+  def onInit(entity: Entity): Unit = {
+    source = entity
+  }
 
 }

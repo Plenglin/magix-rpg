@@ -11,20 +11,20 @@ import io.github.plenglin.magix.types.Targetable
 /**
   * An ability constrained to a particular target.
   */
-abstract class TargetedAbility(source: Entity) extends Ability {
+abstract class TargetedAbility extends PositionalAbility {
 
   private val logger = Logger.getLogger(getClass.getName)
 
   def canTarget(target: Targetable): Boolean
 
-  def onTriggered(target: Targetable)
+  def activate(target: Targetable)
 
-  override def trigger(mousePos: Vector2): Unit = {
+  override def activate(pos: Vector2): Unit = {
     val possibleTargets = GameData.targetables.filter(target =>
-      target.pos.dst2(mousePos) < target.targetRadius2 &&  // Mouse within radius
+      target.pos.dst2(pos) < target.targetRadius2 &&  // Mouse within radius
         canTarget(target))  // Allowed to target
     if (possibleTargets.nonEmpty) {
-      onTriggered(possibleTargets.head)
+      activate(possibleTargets.head)
     }
   }
 

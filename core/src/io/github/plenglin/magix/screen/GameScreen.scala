@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
 import com.badlogic.gdx.math.{Vector2, Vector3}
 import com.badlogic.gdx.{Gdx, InputProcessor, Screen}
+import io.github.plenglin.magix.ability.PositionalAbility
 import io.github.plenglin.magix.entity.humanoid.Goblin
 import io.github.plenglin.magix.types.Damageable
 import io.github.plenglin.magix.world.terrain.TerrainDirt
@@ -109,7 +110,7 @@ class GameScreen extends Screen with InputProcessor {
     logger.info(s"Player clicked: ($mx, $my); Unprojected: $posOnScreen")
     button match {
       case Buttons.RIGHT => GameData.player.target.set(posOnScreen)
-      case Buttons.LEFT => GameData.player.abilities.head.trigger(posOnScreen)
+      case Buttons.LEFT => GameData.player.abilities.head.asInstanceOf[PositionalAbility].activate(posOnScreen)
     }
     true
   }

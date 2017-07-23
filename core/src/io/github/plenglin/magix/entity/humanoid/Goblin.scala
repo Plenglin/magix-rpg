@@ -17,8 +17,12 @@ class Goblin(pos: Vector2) extends Entity(pos) with TexturedDrawable {
 
   override var baseHP: Double = 50
   override var speed: Float = 4
-  override val name = "Goblin"
+  override var name = "Goblin"
   override val targetRadius2: Float = 1
+  override def drawPos: Vector2 = pos
+  override val dimensions: Vector2 = new Vector2(1, 1)
+  override val center: Boolean = true
+
 
   var detectionRadius2 = 64
 
@@ -42,9 +46,5 @@ class Goblin(pos: Vector2) extends Entity(pos) with TexturedDrawable {
   override def onEntityEvent(event: EntityEvent): Boolean = {
     true
   }
-
-  override def drawPos: Vector2 = pos
-  override val dimensions: Vector2 = new Vector2(1, 1)
-  override val center: Boolean = true
 
 }

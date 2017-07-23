@@ -17,7 +17,7 @@ class MagicMissileProjectile(source: Entity, target: Damageable) extends HomingP
   override var speed: Float = 30
   override var baseHP: Double = 30
 
-  override val name: String = "Magic Missile Projectile"
+  override var name: String = "Magic Missile Projectile"
   override var hitRadius2: Float = 1
 
   override def drawPos: Vector2 = pos
