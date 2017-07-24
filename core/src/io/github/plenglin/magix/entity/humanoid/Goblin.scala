@@ -2,6 +2,7 @@ package io.github.plenglin.magix.entity.humanoid
 
 import java.util.logging.Logger
 
+import com.badlogic.gdx.ai.btree.Task
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
 import io.github.plenglin.magix.entity.Entity
@@ -23,8 +24,9 @@ class Goblin(pos: Vector2) extends Entity(pos) with TexturedDrawable {
   override val dimensions: Vector2 = new Vector2(1, 1)
   override val center: Boolean = true
 
-
   var detectionRadius2 = 64
+
+  val task: Task =
 
   override def onInit(): Unit = {
     hp = 50
