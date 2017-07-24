@@ -69,7 +69,7 @@ class GameScreen extends Screen with InputProcessor {
     batch.setProjectionMatrix(cam.combined)
     batch.begin()
     GameData.world.drawTerrain(batch)
-    GameData.drawables.sortBy(-_.layer).foreach{_.draw(batch)}
+    GameData.drawables.filterNot(_.cull(cam)).sortBy(-_.layer).foreach{_.draw(batch)}
     batch.end()
 
   }
