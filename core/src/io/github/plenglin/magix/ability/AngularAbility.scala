@@ -3,7 +3,7 @@ import com.badlogic.gdx.math.Vector2
 
 
 /**
-  * An ability that is triggered with an angle.
+  * An ability that must specify an angle.
   */
 abstract class AngularAbility extends PositionalAbility {
 

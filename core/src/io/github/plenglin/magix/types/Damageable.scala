@@ -2,6 +2,7 @@ package io.github.plenglin.magix.types
 
 import java.util.logging.Logger
 
+import io.github.plenglin.magix.Constants
 import io.github.plenglin.magix.event.health.HealthEvent
 
 import scala.collection.mutable
@@ -27,7 +28,7 @@ trait Damageable extends Targetable {
   }
 
   def isDead: Boolean = {
-    hp < 0
+    hp <= Constants.deathThreshold
   }
 
   /**

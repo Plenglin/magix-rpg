@@ -16,7 +16,7 @@ trait TexturedDrawable extends Drawable {
   val sprite = new Sprite()
 
   override def draw(batch: SpriteBatch): Unit = {
-    logger.info(this.toString)
+    logger.finest("drawing")
     sprite.setRegion(textureRegion)
     sprite.setSize(dimensions.x, dimensions.y)
     if (center) {
@@ -28,7 +28,7 @@ trait TexturedDrawable extends Drawable {
   }
 
   override def layer: Float = {
-    sprite.getY()
+    sprite.getY
   }
 
 }

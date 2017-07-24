@@ -11,6 +11,10 @@ abstract class EntityEffect(var target: Entity) {
 
   val hidden: Boolean  // Whether this effect is to be displayed to the user
 
+  val name: String
+
+  val desc: String = ""
+
   def addedHP: Double = 0
 
   def addedArmor: Double = 0

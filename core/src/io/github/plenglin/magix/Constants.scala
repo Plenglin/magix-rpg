@@ -10,4 +10,9 @@ object Constants {
 
   val randomVisualOffset = 0.25
 
+  /**
+    * Minimum amount of health to count something as dead, because rounding errors suck
+    */
+  val deathThreshold = 0.001
+
 }

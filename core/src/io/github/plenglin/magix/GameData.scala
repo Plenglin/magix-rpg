@@ -36,7 +36,7 @@ object GameData {
     * @return the same entity, for convenience's sake
     */
   def addEntity(entity: Entity): Entity = {
-    entity.onInit()
+    entity.init()
     entities += entity
     entity
   }

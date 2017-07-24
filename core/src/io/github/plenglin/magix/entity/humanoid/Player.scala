@@ -16,7 +16,8 @@ class Player(pos: Vector2) extends Entity(pos) with TexturedDrawable {
   override var name: String = "Player"
 
   override def onInit(): Unit = {
-    abilities += new MagicMissileAttack(this)
+    abilities += new MagicMissileAttack()
+    abilities.foreach(_.onInit(this))
   }
 
   override def onUpdate(dt: Float): Unit = {

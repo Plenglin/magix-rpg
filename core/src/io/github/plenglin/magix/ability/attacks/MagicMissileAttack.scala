@@ -5,20 +5,13 @@ import io.github.plenglin.magix.entity.humanoid.Player
 import io.github.plenglin.magix.entity.projectile.{HomingProjectile, MagicMissileProjectile}
 import io.github.plenglin.magix.types.{Damageable, Targetable}
 
-class MagicMissileAttack(source: Entity) extends TargetedProjectileAttack {
-  override val cooldown: Float = 10
+class MagicMissileAttack extends TargetedProjectileAttack {
+  val cooldown: Long = 500
 
   /**
     * What it's written as to the user
     */
   var name: String = "Magic Missile"
-
-  /**
-    * Called when added to the entity.
-    */
-  override def onInit(entity: Entity): Unit = {
-
-  }
 
   override def generateProjectile(target: Targetable): HomingProjectile = {
     new MagicMissileProjectile(source, target.asInstanceOf[Damageable])
