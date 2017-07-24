@@ -2,12 +2,14 @@ package io.github.plenglin.magix
 
 import com.badlogic.gdx.assets.{AssetDescriptor, AssetManager}
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.graphics.g2d.{BitmapFont, TextureRegion}
 
 
 object Assets {
 
   val manager = new AssetManager()
+
+  val dfArial = new AssetDescriptor[BitmapFont]("com/badlogic/gdx/utils/arial-15.fnt", classOf[BitmapFont])
 
   val dtPlayer = new AssetDescriptor[Texture]("sprite/entity/player.png", classOf[Texture])
   val dtGoblin = new AssetDescriptor[Texture]("sprite/entity/goblin.png", classOf[Texture])
@@ -18,16 +20,21 @@ object Assets {
   val dtTree = new AssetDescriptor[Texture]("sprite/terrain/tree.png", classOf[Texture])
   val dtGrass = new AssetDescriptor[Texture]("sprite/terrain/grass.png", classOf[Texture])
 
-  def tPlayer: TextureRegion = {new TextureRegion(manager.get(dtPlayer))}
-  def tGoblin: TextureRegion = {new TextureRegion(manager.get(dtGoblin))}
+  lazy val fArial: BitmapFont = manager.get(dfArial)
 
-  def tMagicMissile: TextureRegion = {new TextureRegion(manager.get(dtMagicMissile))}
+  lazy val tPlayer: TextureRegion = new TextureRegion(manager.get(dtPlayer))
+  lazy val tGoblin: TextureRegion = new TextureRegion(manager.get(dtGoblin))
 
-  def tDirt: TextureRegion = {new TextureRegion(manager.get(dtDirt))}
-  def tGrass: TextureRegion = {new TextureRegion(manager.get(dtGrass))}
-  def tTree: TextureRegion = {new TextureRegion(manager.get(dtTree))}
+  lazy val tMagicMissile: TextureRegion = new TextureRegion(manager.get(dtMagicMissile))
+
+  lazy val tDirt: TextureRegion = new TextureRegion(manager.get(dtDirt))
+  lazy val tGrass: TextureRegion = new TextureRegion(manager.get(dtGrass))
+  lazy val tTree: TextureRegion = new TextureRegion(manager.get(dtTree))
 
   val toLoad = Array(
+
+    dfArial,
+
     dtPlayer,
     dtGoblin,
 

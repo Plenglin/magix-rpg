@@ -13,19 +13,21 @@ import io.github.plenglin.magix.entity.humanoid.Goblin
 import io.github.plenglin.magix.types.Damageable
 import io.github.plenglin.magix.world.terrain.TerrainDirt
 import io.github.plenglin.magix.world.wall.WallTree
-import io.github.plenglin.magix.{Constants, GameData}
+import io.github.plenglin.magix.{Assets, Constants, GameData}
 
 class GameScreen extends Screen with InputProcessor {
 
   private val logger = Logger.getLogger(getClass.getName)
 
   private var batch: SpriteBatch = _
-  private var cam: OrthographicCamera = _
+  private var gameCam: OrthographicCamera = _
+  private var guiCam: OrthographicCamera = _
 
   override def show(): Unit = {
 
     batch = new SpriteBatch()
-    cam = new OrthographicCamera()
+    gameCam = new OrthographicCamera()
+    guiCam = new OrthographicCamera()
 
     logger.info("resetting game...")
     GameData.reset()
@@ -59,17 +61,26 @@ class GameScreen extends Screen with InputProcessor {
 
     logger.finest("drawing")
 
-    cam.position.set(GameData.player.pos, 0)
-    cam.zoom = 3/128f
+    gameCam.position.set(GameData.player.pos, 0)
+    gameCam.zoom = 3/128f
+    guiCam.zoom = 1
+    gameCam.update()
+    guiCam.update()
 
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
     Gdx.gl.glClearColor(0, 0, 0, 1)
 
-    cam.update()
-    batch.setProjectionMatrix(cam.combined)
+    batch.setProjectionMatrix(gameCam.combined)
     batch.begin()
+
+    // Draw game
     GameData.world.drawTerrain(batch)
-    GameData.drawables.filterNot(_.cull(cam)).sortBy(-_.layer).foreach{_.draw(batch)}
+    GameData.drawables.filterNot(_.cull(gameCam)).sortBy(-_.layer).foreach{_.draw(batch)}
+
+    batch.setProjectionMatrix(guiCam.combined)
+
+    Assets.fArial.draw(batch, f"${GameData.player.hp}%.2f/${GameData.player.maxHP}%.2f", 0, 15)
+
     batch.end()
 
   }
@@ -77,7 +88,8 @@ class GameScreen extends Screen with InputProcessor {
   override def hide(): Unit = {}
 
   override def resize(width: Int, height: Int): Unit = {
-    cam.setToOrtho(false, width, height)
+    gameCam.setToOrtho(false, width, height)
+    guiCam.setToOrtho(false, width, height)
   }
 
   override def dispose(): Unit = {}
@@ -106,7 +118,7 @@ class GameScreen extends Screen with InputProcessor {
     val mx = screenX
     val my = Gdx.graphics.getHeight - screenY
     val mouseVec = new Vector2(mx, my)
-    val posOnScreen3 = cam.unproject(new Vector3(screenX, screenY, 0))
+    val posOnScreen3 = gameCam.unproject(new Vector3(screenX, screenY, 0))
     val posOnScreen = new Vector2(posOnScreen3.x, posOnScreen3.y)
     logger.info(s"Player clicked: ($mx, $my); Unprojected: $posOnScreen")
     button match {

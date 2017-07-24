@@ -18,12 +18,16 @@ trait Damageable extends Targetable {
 
   def processDamageQueue(): Unit = {
     while (damageQueue.nonEmpty) {
-      damageQueue.dequeue().onTrigger(this)
-      logger.info(s"$this.hp: ${this.hp}")
-      if (isDead) {
-        destroy()
-        return
+      val event = damageQueue.dequeue()
+      if (onHealthEvent(event)) {
+        event.onTrigger(this)
+      } else {
+        logger.info(f"$this invalidated HealthEvent $event")
       }
+    }
+    if (isDead) {
+      logger.info(f"$this died, destroying")
+      destroy()
     }
   }
 
@@ -44,8 +48,15 @@ trait Damageable extends Targetable {
     }
   }
 
-  def destroy(): Unit = {
-    hp = 0
+  def destroy()
+
+  /**
+    * Called before a `HealthEvent` gets to trigger.
+    * @param event the event
+    * @return whether it should trigger or not
+    */
+  def onHealthEvent(event: HealthEvent): Boolean = {
+    true
   }
 
 }

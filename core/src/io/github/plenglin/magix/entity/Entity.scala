@@ -5,7 +5,7 @@ import java.util.logging.Logger
 import com.badlogic.gdx.math.Vector2
 import io.github.plenglin.magix.ability.{Ability, TargetedAbility}
 import io.github.plenglin.magix.effect.EntityEffect
-import io.github.plenglin.magix.event.entity.{DamageSource, EntityEvent}
+import io.github.plenglin.magix.event.entity.{HealthChangeSource, EntityEvent}
 import io.github.plenglin.magix.event.global.GlobalEvent
 import io.github.plenglin.magix.types.{Damageable, Drawable}
 import io.github.plenglin.magix.{Constants, GameData}
@@ -17,7 +17,7 @@ import scala.collection.mutable.ListBuffer
   * An entity with a health bar.
   * @param pos where it is
   */
-abstract class Entity(var pos: Vector2) extends DamageSource with Damageable with Drawable {
+abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageable with Drawable {
 
   private val logger = Logger.getLogger(getClass.getName)
 
@@ -60,7 +60,6 @@ abstract class Entity(var pos: Vector2) extends DamageSource with Damageable wit
 
   override def destroy(): Unit = {
     logger.info(s"destroying $this")
-    super.destroy()
     onDestroy()
     GameData.entities -= this
   }

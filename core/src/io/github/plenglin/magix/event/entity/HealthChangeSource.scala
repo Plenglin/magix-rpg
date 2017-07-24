@@ -1,6 +1,6 @@
 package io.github.plenglin.magix.event.entity
 
-trait DamageSource {
+trait HealthChangeSource {
 
   var name: String
 

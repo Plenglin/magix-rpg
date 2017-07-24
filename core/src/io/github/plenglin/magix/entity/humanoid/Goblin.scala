@@ -15,7 +15,7 @@ class Goblin(pos: Vector2) extends Entity(pos) with TexturedDrawable {
 
   override def textureRegion: TextureRegion = Assets.tGoblin
 
-  override var baseHP: Double = 50
+  override var baseHP: Double = 30
   override var speed: Float = 4
   override var name = "Goblin"
   override val targetRadius2: Float = 1

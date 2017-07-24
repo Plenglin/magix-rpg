@@ -10,6 +10,8 @@ class WallTree(i: Int, j: Int) extends Wall(i, j) with TexturedDrawable {
   override val name: String = "Tree Trunk"
   override val targetRadius2: Float = 1
 
+  pos.add(0.5f, 1f)
+
   val randomXOffset: Float = (math.random * Constants.randomVisualOffset).toFloat
   val randomYOffset: Float = (math.random * Constants.randomVisualOffset).toFloat
 

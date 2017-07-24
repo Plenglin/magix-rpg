@@ -4,12 +4,12 @@ import com.badlogic.gdx.utils.TimeUtils
 import io.github.plenglin.magix.ability.exception.AbilityCooldownException
 import io.github.plenglin.magix.effect.AbilityCooldown
 import io.github.plenglin.magix.entity.Entity
-import io.github.plenglin.magix.event.entity.DamageSource
+import io.github.plenglin.magix.event.entity.HealthChangeSource
 
 /**
   * Something that an entity can activate.
   */
-abstract class Ability extends DamageSource {
+abstract class Ability extends HealthChangeSource {
 
   var source: Entity = _
 
