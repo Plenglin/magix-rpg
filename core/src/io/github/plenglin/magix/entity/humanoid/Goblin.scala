@@ -6,9 +6,9 @@ import com.badlogic.gdx.ai.fsm.{DefaultStateMachine, State}
 import com.badlogic.gdx.ai.msg.Telegram
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import io.github.plenglin.magix.ability.{AbilityCooldownTimer, EntityAbilities}
-import io.github.plenglin.magix.ability.exception.{AbilityCooldownException, TargetRangeException}
+import io.github.plenglin.magix.ability.exception.TargetRangeException
 import io.github.plenglin.magix.entity.Entity
+import io.github.plenglin.magix.entityability.{AbilityCooldownTimer, EntityAbilities}
 import io.github.plenglin.magix.event.entity.EntityEvent
 import io.github.plenglin.magix.types.TexturedDrawable
 import io.github.plenglin.magix.{Assets, GameData}

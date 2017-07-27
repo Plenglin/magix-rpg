@@ -3,7 +3,7 @@ package io.github.plenglin.magix.entity
 import java.util.logging.Logger
 
 import com.badlogic.gdx.math.Vector2
-import io.github.plenglin.magix.ability.{Ability, TargetedAbility}
+import io.github.plenglin.magix.ability.{PlayerAbility, TargetedPlayerAbility}
 import io.github.plenglin.magix.effect.EntityEffect
 import io.github.plenglin.magix.event.entity.{HealthChangeSource, EntityEvent}
 import io.github.plenglin.magix.event.global.GlobalEvent
@@ -21,7 +21,7 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
 
   private val logger = Logger.getLogger(getClass.getName)
 
-  var abilities: ListBuffer[Ability] = ListBuffer()
+  var abilities: ListBuffer[PlayerAbility] = ListBuffer()
   var effects: ListBuffer[EntityEffect] = ListBuffer()
 
   var eventQueue: mutable.Queue[EntityEvent] = mutable.Queue()

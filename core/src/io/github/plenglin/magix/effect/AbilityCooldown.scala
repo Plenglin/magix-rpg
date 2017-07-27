@@ -1,9 +1,9 @@
 package io.github.plenglin.magix.effect
 
-import io.github.plenglin.magix.ability.Ability
+import io.github.plenglin.magix.ability.PlayerAbility
 import io.github.plenglin.magix.event.entity.AbilityCooldownEndEvent
 
-class AbilityCooldown(val ability: Ability) extends EntityEffect(ability.source) {
+class AbilityCooldown(val ability: PlayerAbility) extends EntityEffect(ability.source) {
   override val hidden: Boolean = true
 
   override val name: String = f"${ability.name} Cooldown"

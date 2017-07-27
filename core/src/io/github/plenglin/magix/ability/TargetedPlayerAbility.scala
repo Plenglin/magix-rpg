@@ -4,7 +4,7 @@ import java.util.logging.Logger
 
 import com.badlogic.gdx.math.Vector2
 import io.github.plenglin.magix.GameData
-import io.github.plenglin.magix.ability.exception.{InvalidTargetException, NoTargetsException}
+import io.github.plenglin.magix.ability.exception.InvalidTargetException
 import io.github.plenglin.magix.entity.Entity
 import io.github.plenglin.magix.types.Targetable
 
@@ -12,7 +12,7 @@ import io.github.plenglin.magix.types.Targetable
 /**
   * An ability constrained to a particular target.
   */
-abstract class TargetedAbility extends PositionalAbility {
+abstract class TargetedPlayerAbility extends PlayerAbility {
 
   private val logger = Logger.getLogger(getClass.getName)
 
@@ -25,7 +25,7 @@ abstract class TargetedAbility extends PositionalAbility {
     if (possibleTargets.nonEmpty) {
       activate(possibleTargets.head)
     } else {
-      throw new NoTargetsException(this, pos)
+      throw new InvalidTargetException(null)
     }
   }
 

@@ -1,10 +1,8 @@
-package io.github.plenglin.magix.ability
+package io.github.plenglin.magix.entityability
 
 import com.badlogic.gdx.utils.TimeUtils
 import io.github.plenglin.magix.entity.Entity
 import io.github.plenglin.magix.event.entity.HealthChangeSource
-import io.github.plenglin.magix.event.health.ChangeHealthEvent
-import io.github.plenglin.magix.types.Damageable
 
 /**
  * A class for entity ability timing

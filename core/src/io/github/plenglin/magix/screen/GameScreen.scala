@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
 import com.badlogic.gdx.math.{Vector2, Vector3}
 import com.badlogic.gdx.{Gdx, InputProcessor, Screen}
-import io.github.plenglin.magix.ability.PositionalAbility
 import io.github.plenglin.magix.ability.exception.AbilityFailureException
 import io.github.plenglin.magix.entity.humanoid.Goblin
 import io.github.plenglin.magix.types.Damageable
@@ -75,6 +74,7 @@ class GameScreen extends Screen with InputProcessor {
 
     // Draw game
     GameData.world.drawTerrain(batch)
+    GameData.drawables.foreach(_.preDraw())
     GameData.drawables.filterNot(_.cull(gameCam)).sortBy(-_.layer).foreach{_.draw(batch)}
 
     batch.setProjectionMatrix(guiCam.combined)
@@ -125,11 +125,12 @@ class GameScreen extends Screen with InputProcessor {
       case Buttons.RIGHT => GameData.player.target.set(posOnScreen)
       case Buttons.LEFT =>
         try {
-          val ability = GameData.player.abilities.head.asInstanceOf[PositionalAbility]
+          val ability = GameData.player.abilities.head
           logger.info(f"${ability.cooldownComplete}, ${ability.nextActivation}")
-          ability.preActivation()
-          ability.activate(posOnScreen)
-          ability.finishActivation()
+          if (ability.cooldownComplete) {
+            ability.activate(posOnScreen)
+            ability.finishActivation()
+          }
         } catch {
           case _: AbilityFailureException => logger.info("Could not activate ability, skipping")
         }

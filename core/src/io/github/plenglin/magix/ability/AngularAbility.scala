@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2
 /**
   * An ability that must specify an angle.
   */
-abstract class AngularAbility extends PositionalAbility {
+abstract class AngularAbility extends PlayerAbility {
 
   /**
     * Trigger the ability pointed at an angle.

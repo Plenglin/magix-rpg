@@ -17,7 +17,19 @@ trait TexturedDrawable extends Drawable {
 
   val sprite = new Sprite()
 
+  override def preDraw(): Unit = {
+    sprite.setRegion(textureRegion)
+    sprite.setSize(dimensions.x, dimensions.y)
+    if (center) {
+      sprite.setCenter(drawPos.x, drawPos.y)
+      logger.info(f"$this, ${sprite.getX}, ${sprite.getY}")
+    } else {
+      sprite.setPosition(drawPos.x, drawPos.y)
+    }
+  }
+
   override def cull(cam: OrthographicCamera): Boolean = {
+    // Check if any of the sprite's four corners are inside the camera
     val x = sprite.getX
     val y = sprite.getY
     val corners = Array[Vector2](
@@ -30,14 +42,6 @@ trait TexturedDrawable extends Drawable {
   }
 
   override def draw(batch: SpriteBatch): Unit = {
-    logger.finest("drawing")
-    sprite.setRegion(textureRegion)
-    sprite.setSize(dimensions.x, dimensions.y)
-    if (center) {
-      sprite.setCenter(drawPos.x, drawPos.y)
-    } else {
-      sprite.setPosition(drawPos.x, drawPos.y)
-    }
     sprite.draw(batch)
   }
 

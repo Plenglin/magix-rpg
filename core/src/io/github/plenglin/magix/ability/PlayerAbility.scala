@@ -1,17 +1,18 @@
 package io.github.plenglin.magix.ability
 
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.TimeUtils
-import io.github.plenglin.magix.ability.exception.AbilityCooldownException
 import io.github.plenglin.magix.effect.AbilityCooldown
 import io.github.plenglin.magix.entity.Entity
+import io.github.plenglin.magix.entity.humanoid.Player
 import io.github.plenglin.magix.event.entity.HealthChangeSource
 
 /**
   * Something that an entity can activate.
   */
-abstract class Ability extends HealthChangeSource {
+abstract class PlayerAbility extends HealthChangeSource {
 
-  var source: Entity = _
+  var source: Player = _
 
   /**
     * The next time this ability can be activated, in milliseconds
@@ -26,8 +27,8 @@ abstract class Ability extends HealthChangeSource {
   /**
     * Called when added to the entity.
     */
-  def onInit(entity: Entity): Unit = {
-    source = entity
+  def onInit(player: Player): Unit = {
+    source = player
     nextActivation = 0
   }
 
@@ -35,14 +36,7 @@ abstract class Ability extends HealthChangeSource {
     System.currentTimeMillis() >= nextActivation
   }
 
-  /**
-    * You should call this before activation. It will throw exceptions if the ability can't activate, so catch them.
-    */
-  def preActivation(): Unit = {
-    if (!cooldownComplete) {
-      throw new AbilityCooldownException(this)
-    }
-  }
+  def activate(mouse: Vector2)
 
   /**
     * You must call this after the ability is successfully activated.
