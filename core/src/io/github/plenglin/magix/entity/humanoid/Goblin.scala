@@ -2,13 +2,12 @@ package io.github.plenglin.magix.entity.humanoid
 
 import java.util.logging.Logger
 
-import com.badlogic.gdx.ai.btree.Task
-import com.badlogic.gdx.ai.fsm.{DefaultStateMachine, State, StateMachine}
+import com.badlogic.gdx.ai.fsm.{DefaultStateMachine, State}
 import com.badlogic.gdx.ai.msg.Telegram
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.math.Vector2
-import io.github.plenglin.magix.ability.attacks.SimpleMeleeAttack
-import io.github.plenglin.magix.ability.exception.{AbilityCooldownException, InvalidTargetException, TargetRangeException}
+import io.github.plenglin.magix.ability.{AbilityCooldownTimer, EntityAbilities}
+import io.github.plenglin.magix.ability.exception.{AbilityCooldownException, TargetRangeException}
 import io.github.plenglin.magix.entity.Entity
 import io.github.plenglin.magix.event.entity.EntityEvent
 import io.github.plenglin.magix.types.TexturedDrawable
@@ -31,11 +30,9 @@ class Goblin(pos: Vector2) extends Entity(pos) with TexturedDrawable {
   var detectionRadius2 = 64
   var stateMachine = new DefaultStateMachine[Goblin](this)
 
-  val melee = new SimpleMeleeAttack("Scratch", 5, 2000, 1)
-  melee.onInit(this)
+  val melee = new AbilityCooldownTimer(this, "Scratch", 2000, EntityAbilities.meleeAttack(GameData.player, 5, 1))
 
   override def onInit(): Unit = {
-    hp = 50
     stateMachine.setInitialState(GoblinState.LOOKOUT)
   }
 
@@ -83,7 +80,7 @@ class Goblin(pos: Vector2) extends Entity(pos) with TexturedDrawable {
 
       override def update(entity: Goblin): Unit = {
         entity.target.set(GameData.player.pos)
-        if (entity.pos.dst2(GameData.player.pos) <= melee.range2 / 2) {
+        if (entity.pos.dst2(GameData.player.pos) <= 0.5) {
           stateMachine.changeState(ATTACK)
         }
       }
@@ -106,12 +103,9 @@ class Goblin(pos: Vector2) extends Entity(pos) with TexturedDrawable {
 
       override def update(entity: Goblin): Unit = {
         try {
-          entity.melee.preActivation()
-          entity.melee.activate(GameData.player)
-          entity.melee.finishActivation()
+          entity.melee.activateIfReady()
         } catch {
           case _: TargetRangeException => entity.stateMachine.changeState(GoblinState.APPROACH)
-          case _: AbilityCooldownException =>
         }
       }
 

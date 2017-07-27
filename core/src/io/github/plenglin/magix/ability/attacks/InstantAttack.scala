@@ -16,7 +16,7 @@ abstract class InstantAttack extends TargetedAbility {
 
   override def activate(target: Targetable): Unit = {
     if (source.pos.dst2(target.pos) > range2) {
-      throw new TargetRangeException(this, target)
+      //throw new TargetRangeException(this, target)
     }
     target match {
       case d: Damageable => d.damageQueue += new ChangeHealthEvent(-damage, this)
