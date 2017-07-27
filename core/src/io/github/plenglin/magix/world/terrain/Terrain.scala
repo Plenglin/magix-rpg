@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
   */
 abstract class Terrain {
 
-  val speed: Double  // How fast an entity moves over it
+  val speed: Double // How fast an entity moves over it
 
   val name: String
 

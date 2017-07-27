@@ -9,12 +9,10 @@ import scala.collection.mutable
 
 trait Damageable extends Targetable {
 
-  private val logger = Logger.getLogger(getClass.getName)
-
   val damageQueue: mutable.Queue[HealthEvent] = new mutable.Queue()
-  var hp: Double          // How much health it has
-  def maxHP: Double       // How much health it can have
-  def armor: Double = 0   // Percent of incoming damage negated. Armor cannot heal.
+  private val logger = Logger.getLogger(getClass.getName)
+  var hp: Double // How much health it has
+  def maxHP: Double // How much health it can have
 
   def processDamageQueue(): Unit = {
     while (damageQueue.nonEmpty) {
@@ -36,27 +34,31 @@ trait Damageable extends Targetable {
   }
 
   /**
-    * Apply a change in health to the object. This accounts for the armor, as well.
-    * @param change how much to change. If positive, heals. If negative, damages.
-    */
-  def applyHealthChange(change: Double): Unit = {
-    if (change < 0) {
-      var dmg = -change
-      hp = hp - dmg * math.max(0, 1 - armor)
-    } else {
-      hp += math.min(change, maxHP)
-    }
-  }
-
-  def destroy()
-
-  /**
     * Called before a `HealthEvent` gets to trigger.
+    *
     * @param event the event
     * @return whether it should trigger or not
     */
   def onHealthEvent(event: HealthEvent): Boolean = {
     true
   }
+
+  /**
+    * Apply a change in health to the object. This accounts for the armor, as well.
+    *
+    * @param change how much to change. If positive, heals. If negative, damages.
+    */
+  def applyHealthChange(change: Double): Unit = {
+    if (change < 0) {
+      val dmg = -change
+      hp = hp - dmg * math.max(0, 1 - armor)
+    } else {
+      hp += math.min(change, maxHP)
+    }
+  }
+
+  def armor: Double = 0 // Percent of incoming damage negated. Armor cannot heal.
+
+  def destroy()
 
 }

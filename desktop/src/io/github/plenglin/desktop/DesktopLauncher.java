@@ -3,7 +3,6 @@ package io.github.plenglin.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import io.github.plenglin.magix.Magix;
-import org.lwjgl.Sys;
 
 import java.util.logging.Level;
 import java.util.logging.LogManager;

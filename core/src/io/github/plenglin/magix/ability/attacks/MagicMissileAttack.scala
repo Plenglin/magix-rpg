@@ -1,6 +1,5 @@
 package io.github.plenglin.magix.ability.attacks
 
-import io.github.plenglin.magix.entity.Entity
 import io.github.plenglin.magix.entity.humanoid.Player
 import io.github.plenglin.magix.entity.projectile.{HomingProjectile, MagicMissileProjectile}
 import io.github.plenglin.magix.types.{Damageable, Targetable}

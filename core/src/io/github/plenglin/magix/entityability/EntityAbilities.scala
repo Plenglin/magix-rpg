@@ -9,7 +9,7 @@ object EntityAbilities {
   def meleeAttack(target: Damageable, damage: Long, range: Float): (Entity, AbilityCooldownTimer) => Unit = {
 
     (source, timer) => {
-      if (target.pos.dst2(source.pos) <= range*range) {
+      if (target.pos.dst2(source.pos) <= range * range) {
         target.damageQueue += new ChangeHealthEvent(-damage, timer)
       } else {
         throw new TargetRangeException()

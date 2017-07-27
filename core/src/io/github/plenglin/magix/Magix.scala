@@ -6,7 +6,9 @@ import io.github.plenglin.magix.screen.GameScreen
 class Magix extends Game {
 
   override def create() {
-    Assets.toLoad.foreach{Assets.manager.load}
+    Assets.toLoad.foreach {
+      Assets.manager.load
+    }
     Assets.manager.finishLoading()
     setScreen(new GameScreen)
   }

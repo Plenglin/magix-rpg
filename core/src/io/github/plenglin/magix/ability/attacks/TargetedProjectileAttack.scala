@@ -1,17 +1,12 @@
 package io.github.plenglin.magix.ability.attacks
 
-import java.util.NoSuchElementException
-
 import io.github.plenglin.magix.GameData
 import io.github.plenglin.magix.ability.TargetedPlayerAbility
-import io.github.plenglin.magix.ability.exception.{InvalidTargetException, TargetRangeException}
-import io.github.plenglin.magix.entity.Entity
+import io.github.plenglin.magix.ability.exception.TargetRangeException
 import io.github.plenglin.magix.entity.projectile.HomingProjectile
-import io.github.plenglin.magix.types.{Damageable, Targetable}
+import io.github.plenglin.magix.types.Targetable
 
 abstract class TargetedProjectileAttack extends TargetedPlayerAbility {
-
-  def range2: Float = Float.MaxValue
 
   def generateProjectile(target: Targetable): HomingProjectile
 
@@ -21,5 +16,7 @@ abstract class TargetedProjectileAttack extends TargetedPlayerAbility {
     }
     GameData.addEntity(generateProjectile(target))
   }
+
+  def range2: Float = Float.MaxValue
 
 }

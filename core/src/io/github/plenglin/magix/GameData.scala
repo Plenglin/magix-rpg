@@ -12,17 +12,18 @@ import scala.collection.mutable.ListBuffer
 
 object GameData {
 
-  var eventQueue: mutable.Queue[GlobalEvent] = mutable.Queue()
+  val eventQueue: mutable.Queue[GlobalEvent] = mutable.Queue()
   var entities: ListBuffer[Entity] = _
   var player: Player = _
+  var world: World = _
+
   def targetables: mutable.Iterable[Targetable] = {
     entities.map(_.asInstanceOf[Targetable]) ++ world.walls
   }
+
   def drawables: mutable.Seq[Drawable] = {
     entities.map(_.asInstanceOf[Drawable]) ++ world.walls
   }
-
-  var world: World = _
 
   def reset(): Unit = {
     world = new World()
@@ -32,6 +33,7 @@ object GameData {
 
   /**
     * Adds an entity to the list and initializes it.
+    *
     * @param entity the entity to add
     * @return the same entity, for convenience's sake
     */
@@ -44,7 +46,9 @@ object GameData {
   def processEventQueue(): Unit = {
     while (eventQueue.nonEmpty) {
       val event = eventQueue.dequeue()
-      entities.foreach{_.onGlobalEvent(event)}
+      entities.foreach {
+        _.onGlobalEvent(event)
+      }
       event.onTrigger()
     }
   }

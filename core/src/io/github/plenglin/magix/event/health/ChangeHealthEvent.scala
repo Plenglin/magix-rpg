@@ -7,6 +7,7 @@ import io.github.plenglin.magix.types.Damageable
 
 /**
   * Change health to be a certain amount
+  *
   * @param change amount to change (positive for heal, negative for damage)
   * @param source where the change came from
   */

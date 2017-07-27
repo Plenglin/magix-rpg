@@ -5,6 +5,7 @@ import io.github.plenglin.magix.types.Damageable
 
 /**
   * Any event that involves a change of health.
+  *
   * @param source where the change came from
   */
 abstract class HealthEvent(val source: HealthChangeSource) {

@@ -5,11 +5,12 @@ import io.github.plenglin.magix.event.entity.EntityEvent
 
 /**
   * An effect that can be applied to a `LivingEntity`.
-  * @param target
+  *
+  * @param target the target entity
   */
 abstract class EntityEffect(var target: Entity) {
 
-  val hidden: Boolean  // Whether this effect is to be displayed to the user
+  val hidden: Boolean // Whether this effect is to be displayed to the user
 
   val name: String
 

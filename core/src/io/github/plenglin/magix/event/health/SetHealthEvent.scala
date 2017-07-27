@@ -7,6 +7,7 @@ import io.github.plenglin.magix.types.Damageable
 
 /**
   * Set the health to be a specific number. Can be used to destroy a `Damageable` immediately as well.
+  *
   * @param health the number
   * @param source where the change came from
   */

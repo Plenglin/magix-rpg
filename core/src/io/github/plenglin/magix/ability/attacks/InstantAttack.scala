@@ -8,7 +8,6 @@ import io.github.plenglin.magix.types.{Damageable, Targetable}
 abstract class InstantAttack extends TargetedPlayerAbility {
 
   def damage: Double
-  def range2: Float = Float.MaxValue
 
   override def canTarget(target: Targetable): Boolean = {
     target.isInstanceOf[Damageable]
@@ -23,4 +22,6 @@ abstract class InstantAttack extends TargetedPlayerAbility {
       case _ => throw new InvalidTargetException(target)
     }
   }
+
+  def range2: Float = Float.MaxValue
 }

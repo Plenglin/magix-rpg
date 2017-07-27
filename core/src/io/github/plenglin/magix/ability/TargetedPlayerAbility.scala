@@ -5,7 +5,6 @@ import java.util.logging.Logger
 import com.badlogic.gdx.math.Vector2
 import io.github.plenglin.magix.GameData
 import io.github.plenglin.magix.ability.exception.InvalidTargetException
-import io.github.plenglin.magix.entity.Entity
 import io.github.plenglin.magix.types.Targetable
 
 

@@ -15,22 +15,20 @@ import io.github.plenglin.magix.{Assets, GameData}
 
 class Goblin(pos: Vector2) extends Entity(pos) with TexturedDrawable {
 
+  override val targetRadius2: Float = 1
+  override val dimensions: Vector2 = new Vector2(1, 1)
+  override val center: Boolean = true
+  val detectionRadius2 = 64
+  val stateMachine = new DefaultStateMachine[Goblin](this)
+  val melee = new AbilityCooldownTimer(this, "Scratch", 2000, EntityAbilities.meleeAttack(GameData.player, 5, 1))
   private val logger = Logger.getLogger(getClass.getName)
-
-  override def textureRegion: TextureRegion = Assets.tGoblin
-
   override var baseHP: Double = 30
   override var speed: Float = 4
   override var name = "Goblin"
-  override val targetRadius2: Float = 1
+
+  override def textureRegion: TextureRegion = Assets.tGoblin
+
   override def drawPos: Vector2 = pos
-  override val dimensions: Vector2 = new Vector2(1, 1)
-  override val center: Boolean = true
-
-  var detectionRadius2 = 64
-  var stateMachine = new DefaultStateMachine[Goblin](this)
-
-  val melee = new AbilityCooldownTimer(this, "Scratch", 2000, EntityAbilities.meleeAttack(GameData.player, 5, 1))
 
   override def onInit(): Unit = {
     stateMachine.setInitialState(GoblinState.LOOKOUT)

@@ -25,7 +25,7 @@ class World {
     walls.foreach(_.draw(batch))
   }
 
-  def cells: Iterable[WorldCell] = grid.flatMap(j => j)
-
   def walls: Iterable[Wall] = cells.filter(_.wall.isDefined).map(_.wall.get)
+
+  def cells: Iterable[WorldCell] = grid.flatten
 }

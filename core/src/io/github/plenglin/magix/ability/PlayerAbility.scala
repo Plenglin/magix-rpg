@@ -1,9 +1,7 @@
 package io.github.plenglin.magix.ability
 
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.utils.TimeUtils
 import io.github.plenglin.magix.effect.AbilityCooldown
-import io.github.plenglin.magix.entity.Entity
 import io.github.plenglin.magix.entity.humanoid.Player
 import io.github.plenglin.magix.event.entity.HealthChangeSource
 

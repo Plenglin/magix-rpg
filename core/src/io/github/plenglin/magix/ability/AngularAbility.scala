@@ -1,4 +1,5 @@
 package io.github.plenglin.magix.ability
+
 import com.badlogic.gdx.math.Vector2
 
 
@@ -9,6 +10,7 @@ abstract class AngularAbility extends PlayerAbility {
 
   /**
     * Trigger the ability pointed at an angle.
+    *
     * @param angle the angle, in radians, where 0rad is right and goes counterclockwise.
     */
   def activate(angle: Float)

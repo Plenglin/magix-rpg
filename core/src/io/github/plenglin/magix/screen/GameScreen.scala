@@ -54,14 +54,18 @@ class GameScreen extends Screen with InputProcessor {
 
     logger.finest(s"updating, dt=$delta")
 
-    GameData.targetables.filter(_.isInstanceOf[Damageable]).map(_.asInstanceOf[Damageable]).foreach{_.processDamageQueue()}
+    GameData.targetables.filter(_.isInstanceOf[Damageable]).map(_.asInstanceOf[Damageable]).foreach {
+      _.processDamageQueue()
+    }
 
-    GameData.entities.foreach{_.onUpdate(delta)}
+    GameData.entities.foreach {
+      _.onUpdate(delta)
+    }
 
     logger.finest("drawing")
 
     gameCam.position.set(GameData.player.pos, 0)
-    gameCam.zoom = 3/128f
+    gameCam.zoom = 3 / 128f
     guiCam.zoom = 1
     gameCam.update()
     guiCam.update()
@@ -75,7 +79,9 @@ class GameScreen extends Screen with InputProcessor {
     // Draw game
     GameData.world.drawTerrain(batch)
     GameData.drawables.foreach(_.preDraw())
-    GameData.drawables.filterNot(_.cull(gameCam)).sortBy(-_.layer).foreach{_.draw(batch)}
+    GameData.drawables.filterNot(_.cull(gameCam)).sortBy(-_.layer).foreach {
+      _.draw(batch)
+    }
 
     batch.setProjectionMatrix(guiCam.combined)
 
@@ -120,7 +126,7 @@ class GameScreen extends Screen with InputProcessor {
     val mouseVec = new Vector2(mx, my)
     val posOnScreen3 = gameCam.unproject(new Vector3(screenX, screenY, 0))
     val posOnScreen = new Vector2(posOnScreen3.x, posOnScreen3.y)
-    logger.info(s"Player clicked: ($mx, $my); Unprojected: $posOnScreen")
+    logger.info(s"Player clicked: ($mx, $my); Game: $posOnScreen")
     button match {
       case Buttons.RIGHT => GameData.player.target.set(posOnScreen)
       case Buttons.LEFT =>
