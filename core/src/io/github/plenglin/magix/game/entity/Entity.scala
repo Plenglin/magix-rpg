@@ -35,6 +35,8 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
   var mana: Double = _
   val baseManaRegen: Double = 0
 
+  val inventory: Inventory = _
+
   def manaRegen: Double = baseManaRegen * effects.map(_.coeffManaRegen).product + effects.map(_.addedManaRegen).sum
 
   var baseHP: Double
@@ -46,8 +48,8 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
   override def armor: Double = baseArmor + effects.map(_.addedArmor).sum
 
   def init(): Unit = {
-    this.hp = this.maxHP
-    this.mana = this.maxMana
+    hp = maxHP
+    mana = maxMana
     onInit()
   }
 

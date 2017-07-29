@@ -15,7 +15,6 @@ abstract class Wall(val i: Int, val j: Int) extends Damageable with Drawable {
 
   override val targetRadius2: Float = 100
   val pos: Vector2 = new Vector2(i, j)
-  val name: String
 
   override var hp: Double = maxHP
 

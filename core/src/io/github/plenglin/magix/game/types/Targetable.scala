@@ -19,4 +19,6 @@ trait Targetable {
     */
   def pos: Vector2
 
+  def name: String
+
 }
