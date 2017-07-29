@@ -11,12 +11,12 @@ import com.badlogic.gdx.scenes.scene2d._
 import com.badlogic.gdx.scenes.scene2d.ui.{ProgressBar, Skin, TextButton}
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.{Gdx, InputProcessor, Screen}
-import io.github.plenglin.magix.ability.exception.AbilityFailureException
-import io.github.plenglin.magix.entity.humanoid.Goblin
-import io.github.plenglin.magix.types.Damageable
+import io.github.plenglin.magix.game.ability.exception.AbilityFailureException
+import io.github.plenglin.magix.game.entity.humanoid.Goblin
+import io.github.plenglin.magix.game.types.Damageable
 import io.github.plenglin.magix.ui.GameScreenHUD
-import io.github.plenglin.magix.world.terrain.TerrainDirt
-import io.github.plenglin.magix.world.wall.WallTree
+import io.github.plenglin.magix.game.world.terrain.TerrainDirt
+import io.github.plenglin.magix.game.world.wall.WallTree
 import io.github.plenglin.magix.{Assets, Constants, GameData}
 
 class GameScreen extends Screen with InputProcessor {

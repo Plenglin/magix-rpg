@@ -1,11 +1,12 @@
 package io.github.plenglin.magix
 
 import com.badlogic.gdx.math.Vector2
-import io.github.plenglin.magix.entity.Entity
-import io.github.plenglin.magix.entity.humanoid.Player
-import io.github.plenglin.magix.event.global.GlobalEvent
-import io.github.plenglin.magix.types.{Drawable, Targetable}
-import io.github.plenglin.magix.world.World
+import io.github.plenglin.magix.game.entity.Entity
+import io.github.plenglin.magix.game.entity.humanoid.Player
+import io.github.plenglin.magix.game.event.global.GlobalEvent
+import io.github.plenglin.magix.game.types.Targetable
+import io.github.plenglin.magix.game.world.World
+import io.github.plenglin.magix.render.Drawable
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
