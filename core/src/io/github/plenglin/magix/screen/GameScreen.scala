@@ -67,7 +67,8 @@ class GameScreen extends Screen with InputProcessor {
     // Run updates
     GameData.entities.foreach(_.onUpdate(delta))
 
-    // Regenerate health
+    // Regenerate mana and health
+    GameData.entities.foreach(_.doManaRegen(delta))
     GameData.targetables.filter(_.isInstanceOf[Damageable]).map(_.asInstanceOf[Damageable]).foreach(_.doHPRegen(delta))
 
     // Process event queues
@@ -85,8 +86,6 @@ class GameScreen extends Screen with InputProcessor {
     gameCam.position.set(GameData.player.pos, 0)
     gameCam.zoom = 3 / 128f
     gameCam.update()
-
-    logger.fine(f"${GameData.player.hp}, ${GameData.player.maxHP}")
 
     // Clear screen
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
@@ -150,7 +149,7 @@ class GameScreen extends Screen with InputProcessor {
         try {
           val ability = GameData.player.abilities.head
           logger.info(f"${ability.cooldownComplete}, ${ability.nextActivation}")
-          if (ability.cooldownComplete) {
+          if (ability.cooldownComplete && ability.enoughMana) {
             ability.activate(posOnScreen)
             ability.finishActivation()
           }

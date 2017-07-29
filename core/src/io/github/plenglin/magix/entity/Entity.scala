@@ -56,6 +56,10 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
     */
   def onInit() {}
 
+  def doManaRegen(dt: Float): Unit = {
+    mana = math.min(mana + dt*manaRegen, maxMana)
+  }
+
   /**
     * Called every single loop.
     *

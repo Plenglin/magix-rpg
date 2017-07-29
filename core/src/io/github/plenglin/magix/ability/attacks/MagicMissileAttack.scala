@@ -5,7 +5,7 @@ import io.github.plenglin.magix.entity.projectile.{HomingProjectile, MagicMissil
 import io.github.plenglin.magix.types.{Damageable, Targetable}
 
 class MagicMissileAttack extends TargetedProjectileAttack {
-  val cooldown: Long = 500
+  override val cooldown: Long = 500
 
   /**
     * What it's written as to the user
@@ -22,4 +22,8 @@ class MagicMissileAttack extends TargetedProjectileAttack {
     case _ => false
   }
 
+  /**
+    * Mana subtracted from player when activated
+    */
+  override val manaCost: Double = 15
 }

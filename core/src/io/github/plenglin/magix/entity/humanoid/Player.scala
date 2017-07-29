@@ -35,5 +35,5 @@ class Player(pos: Vector2) extends Entity(pos) with TexturedDrawable {
 
   override val baseHPRegen: Double = 0.2
   override val baseMana: Double = 100
-  override val baseManaRegen: Double = 1
+  override val baseManaRegen: Double = 3
 }

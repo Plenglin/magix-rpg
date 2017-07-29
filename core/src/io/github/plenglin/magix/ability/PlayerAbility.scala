@@ -23,6 +23,11 @@ abstract class PlayerAbility extends HealthChangeSource {
   def cooldown: Long
 
   /**
+    * Mana subtracted from player when activated
+    */
+  def manaCost: Double
+
+  /**
     * Called when added to the entity.
     */
   def onInit(player: Player): Unit = {
@@ -34,6 +39,10 @@ abstract class PlayerAbility extends HealthChangeSource {
     System.currentTimeMillis() >= nextActivation
   }
 
+  def enoughMana: Boolean = {
+    source.mana >= this.manaCost
+  }
+
   def activate(mouse: Vector2)
 
   /**
@@ -42,6 +51,7 @@ abstract class PlayerAbility extends HealthChangeSource {
   def finishActivation(): Unit = {
     source.effects += new AbilityCooldown(this)
     nextActivation = System.currentTimeMillis() + cooldown
+    source.mana -= this.manaCost
   }
 
 }
