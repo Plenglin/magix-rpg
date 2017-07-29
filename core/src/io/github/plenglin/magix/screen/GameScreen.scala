@@ -72,6 +72,7 @@ class GameScreen extends Screen with InputProcessor {
     GameData.targetables.filter(_.isInstanceOf[Damageable]).map(_.asInstanceOf[Damageable]).foreach(_.doHPRegen(delta))
 
     // Process event queues
+    GameData.entities.foreach(_.controlLoop.update(delta))
     GameData.entities.foreach(_.processEventQueue())
     GameData.targetables.filter(_.isInstanceOf[Damageable]).map(_.asInstanceOf[Damageable]).foreach(_.processDamageQueue())
 

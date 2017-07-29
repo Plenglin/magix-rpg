@@ -3,6 +3,7 @@ package io.github.plenglin.magix.game.entity
 import java.util.logging.Logger
 
 import com.badlogic.gdx.math.Vector2
+import io.github.plenglin.magix.control.ControlLoop
 import io.github.plenglin.magix.game.ability.player.PlayerAbility
 import io.github.plenglin.magix.game.effect.EntityEffect
 import io.github.plenglin.magix.game.event.entity.{EntityEvent, HealthChangeSource}
@@ -25,7 +26,8 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
   val baseArmor: Double = 0
   private val logger = Logger.getLogger(getClass.getName)
   var abilities: ListBuffer[PlayerAbility] = ListBuffer()
-  var effects: ListBuffer[EntityEffect] = ListBuffer()
+  val controlLoop = new ControlLoop()
+  def effects: ListBuffer[EntityEffect] = controlLoop.loopables.filter(_.isInstanceOf[EntityEffect]).map(_.asInstanceOf[EntityEffect])
   var eventQueue: mutable.Queue[EntityEvent] = mutable.Queue()
   var speed: Float
 
@@ -120,7 +122,7 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
     if (displacement.len2() >= Constants.movementThreshold2) {
       displacement.nor.scl(-speed * dt)
       pos.add(displacement)
-      logger.fine(s"displacement: $displacement; magnitude: ${displacement.len()},new pos: $pos")
+      logger.finest(s"displacement: $displacement; magnitude: ${displacement.len()},new pos: $pos")
       return true
     }
     false

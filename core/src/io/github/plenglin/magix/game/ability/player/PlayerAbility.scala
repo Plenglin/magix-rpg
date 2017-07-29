@@ -49,9 +49,9 @@ abstract class PlayerAbility extends HealthChangeSource {
     * You must call this after the ability is successfully activated.
     */
   def finishActivation(): Unit = {
-    source.effects += new AbilityCooldown(this)
     nextActivation = System.currentTimeMillis() + cooldown
     source.mana -= this.manaCost
+    source.controlLoop += new AbilityCooldown(this)
   }
 
 }

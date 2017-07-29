@@ -1,5 +1,6 @@
 package io.github.plenglin.magix.game.effect
 
+import io.github.plenglin.magix.control.Loopable
 import io.github.plenglin.magix.game.entity.Entity
 import io.github.plenglin.magix.game.event.entity.EntityEvent
 
@@ -8,7 +9,9 @@ import io.github.plenglin.magix.game.event.entity.EntityEvent
   *
   * @param target the target entity
   */
-abstract class EntityEffect(var target: Entity) {
+abstract class EntityEffect() extends Loopable {
+
+  var target: Entity = _
 
   val hidden: Boolean // Whether this effect is to be displayed to the user
 
@@ -30,13 +33,10 @@ abstract class EntityEffect(var target: Entity) {
   def addedHPRegen: Double = 0
   def coeffHPRegen: Double = 1
 
-  def onAdded(): Unit
-
-  def onApply(): Unit
-
-  def shouldRemove(): Boolean
-
-  def onRemove(): Unit
+  def init(entity: Entity): Unit = {
+    target = entity
+    super.init()
+  }
 
   def onEvent(event: EntityEvent): Unit = {
 
