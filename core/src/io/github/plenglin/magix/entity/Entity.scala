@@ -14,7 +14,7 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
-  * An entity with a health bar.
+  * A thing that can move around that has health and mana.
   *
   * @param pos where it is
   */
@@ -27,16 +27,28 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
   var effects: ListBuffer[EntityEffect] = ListBuffer()
   var eventQueue: mutable.Queue[EntityEvent] = mutable.Queue()
   var speed: Float
+
+  val baseMana: Double = 0
+  var mana: Double = _
+  val baseManaRegen: Double = 0
+
+  def manaRegen: Double = baseManaRegen * effects.map(_.coeffManaRegen).product + effects.map(_.addedManaRegen).sum
+
   var baseHP: Double
+  val baseHPRegen: Double = 0
   var hp: Double = _
+
+  override def hpRegen: Double = baseManaRegen * effects.map(_.coeffManaRegen).product + effects.map(_.addedManaRegen).sum
 
   override def armor: Double = baseArmor + effects.map(_.addedArmor).sum
 
   def init(): Unit = {
     this.hp = this.maxHP
+    this.mana = this.maxMana
     onInit()
   }
 
+  def maxMana: Double = baseMana * effects.map(_.coeffMana).product + effects.map(_.addedMana).sum
   override def maxHP: Double = baseHP * effects.map(_.coeffHP).product + effects.map(_.addedHP).sum
 
   /**
@@ -71,7 +83,6 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
         event.onTrigger(this)
       }
     }
-    processDamageQueue()
   }
 
   /**

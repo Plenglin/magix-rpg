@@ -23,7 +23,7 @@ trait TexturedDrawable extends Drawable {
     sprite.setSize(dimensions.x, dimensions.y)
     if (center) {
       sprite.setCenter(drawPos.x, drawPos.y)
-      logger.info(f"$this, ${sprite.getX}, ${sprite.getY}")
+      //logger.info(f"$this, ${sprite.getX}, ${sprite.getY}")
     } else {
       sprite.setPosition(drawPos.x, drawPos.y)
     }

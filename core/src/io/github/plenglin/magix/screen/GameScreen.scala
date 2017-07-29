@@ -6,10 +6,15 @@ import com.badlogic.gdx.Input.Buttons
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
 import com.badlogic.gdx.math.{Vector2, Vector3}
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import com.badlogic.gdx.scenes.scene2d._
+import com.badlogic.gdx.scenes.scene2d.ui.{ProgressBar, Skin, TextButton}
+import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.{Gdx, InputProcessor, Screen}
 import io.github.plenglin.magix.ability.exception.AbilityFailureException
 import io.github.plenglin.magix.entity.humanoid.Goblin
 import io.github.plenglin.magix.types.Damageable
+import io.github.plenglin.magix.ui.GameScreenHUD
 import io.github.plenglin.magix.world.terrain.TerrainDirt
 import io.github.plenglin.magix.world.wall.WallTree
 import io.github.plenglin.magix.{Assets, Constants, GameData}
@@ -20,13 +25,18 @@ class GameScreen extends Screen with InputProcessor {
 
   private var batch: SpriteBatch = _
   private var gameCam: OrthographicCamera = _
-  private var guiCam: OrthographicCamera = _
+  private var hud: GameScreenHUD = _
+  //private var guiCam: OrthographicCamera = _
+
+  private var uiStage: Stage = _
 
   override def show(): Unit = {
 
     batch = new SpriteBatch()
     gameCam = new OrthographicCamera()
-    guiCam = new OrthographicCamera()
+
+    uiStage = new Stage(new ScreenViewport())
+    hud = new GameScreenHUD(uiStage, Assets.skinGame)
 
     logger.info("resetting game...")
     GameData.reset()
@@ -54,22 +64,31 @@ class GameScreen extends Screen with InputProcessor {
 
     logger.finest(s"updating, dt=$delta")
 
-    GameData.targetables.filter(_.isInstanceOf[Damageable]).map(_.asInstanceOf[Damageable]).foreach {
-      _.processDamageQueue()
-    }
+    // Run updates
+    GameData.entities.foreach(_.onUpdate(delta))
 
-    GameData.entities.foreach {
-      _.onUpdate(delta)
-    }
+    // Regenerate health
+    GameData.targetables.filter(_.isInstanceOf[Damageable]).map(_.asInstanceOf[Damageable]).foreach(_.doHPRegen(delta))
+
+    // Process event queues
+    GameData.entities.foreach(_.processEventQueue())
+    GameData.targetables.filter(_.isInstanceOf[Damageable]).map(_.asInstanceOf[Damageable]).foreach(_.processDamageQueue())
+
+    uiStage.act(delta)
 
     logger.finest("drawing")
 
+    // Update HUD
+    hud.update()
+
+    // Update camera
     gameCam.position.set(GameData.player.pos, 0)
     gameCam.zoom = 3 / 128f
-    guiCam.zoom = 1
     gameCam.update()
-    guiCam.update()
 
+    logger.fine(f"${GameData.player.hp}, ${GameData.player.maxHP}")
+
+    // Clear screen
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
     Gdx.gl.glClearColor(0, 0, 0, 1)
 
@@ -79,15 +98,13 @@ class GameScreen extends Screen with InputProcessor {
     // Draw game
     GameData.world.drawTerrain(batch)
     GameData.drawables.foreach(_.preDraw())
-    GameData.drawables.filterNot(_.cull(gameCam)).sortBy(-_.layer).foreach {
-      _.draw(batch)
-    }
-
-    batch.setProjectionMatrix(guiCam.combined)
-
-    Assets.fArial.draw(batch, f"${GameData.player.hp}%.2f/${GameData.player.maxHP}%.2f", 0, 15)
+    GameData.drawables.filterNot(_.cull(gameCam)).sortBy(-_.layer).foreach(_.draw(batch))
 
     batch.end()
+
+    // Draw UI
+    uiStage.draw()
+    //Assets.fArial.draw(batch, f"${GameData.player.hp}%.2f/${GameData.player.maxHP}%.2f", 0, 15)
 
   }
 
@@ -95,7 +112,7 @@ class GameScreen extends Screen with InputProcessor {
 
   override def resize(width: Int, height: Int): Unit = {
     gameCam.setToOrtho(false, width, height)
-    guiCam.setToOrtho(false, width, height)
+    uiStage.getViewport.update(width, height)
   }
 
   override def dispose(): Unit = {}

@@ -13,6 +13,7 @@ trait Damageable extends Targetable {
   private val logger = Logger.getLogger(getClass.getName)
   var hp: Double // How much health it has
   def maxHP: Double // How much health it can have
+  def hpRegen: Double = 0 // How much health it generates every second
 
   def processDamageQueue(): Unit = {
     while (damageQueue.nonEmpty) {
@@ -48,13 +49,21 @@ trait Damageable extends Targetable {
     *
     * @param change how much to change. If positive, heals. If negative, damages.
     */
-  def applyHealthChange(change: Double): Unit = {
+  def applyHealthChange(change: Double, bypassArmor: Boolean = false): Unit = {
     if (change < 0) {
       val dmg = -change
-      hp = hp - dmg * math.max(0, 1 - armor)
+      if (bypassArmor) {
+        hp -= dmg
+      } else {
+        hp = hp - dmg * math.max(0, 1 - armor)
+      }
     } else {
-      hp += math.min(change, maxHP)
+      hp = math.min(hp + change, maxHP)
     }
+  }
+
+  def doHPRegen(dt: Float): Unit = {
+    applyHealthChange(dt.toDouble * hpRegen)
   }
 
   def armor: Double = 0 // Percent of incoming damage negated. Armor cannot heal.

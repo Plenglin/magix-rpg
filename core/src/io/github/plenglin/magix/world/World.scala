@@ -27,5 +27,5 @@ class World {
 
   def walls: Iterable[Wall] = cells.filter(_.wall.isDefined).map(_.wall.get)
 
-  def cells: Iterable[WorldCell] = grid.flatten
+  def cells: Iterable[WorldCell] = grid.toList.flatten
 }
