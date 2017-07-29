@@ -1,7 +1,7 @@
 package io.github.plenglin.magix.game.ability.player
 
 import com.badlogic.gdx.math.Vector2
-import io.github.plenglin.magix.game.effect.AbilityCooldown
+import io.github.plenglin.magix.game.effect.{AbilityCooldown, WizardsWait}
 import io.github.plenglin.magix.game.entity.humanoid.Player
 import io.github.plenglin.magix.game.event.entity.HealthChangeSource
 
@@ -52,6 +52,7 @@ abstract class PlayerAbility extends HealthChangeSource {
     nextActivation = System.currentTimeMillis() + cooldown
     source.mana -= this.manaCost
     source.controlLoop += new AbilityCooldown(this)
+    source.controlLoop += new WizardsWait()
   }
 
 }

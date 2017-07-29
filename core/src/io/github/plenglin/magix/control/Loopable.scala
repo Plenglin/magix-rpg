@@ -9,17 +9,13 @@ trait Loopable {
     onInit()
   }
 
-  protected def onInit(): Unit = {
-
-  }
+  protected def onInit(): Unit = {}
 
   def update(dt: Float): Unit = {
     onUpdate(dt)
   }
 
-  protected def onUpdate(dt: Float): Unit = {
-
-  }
+  protected def onUpdate(dt: Float): Unit = {}
 
   def shouldRemove: Boolean
 
@@ -28,6 +24,6 @@ trait Loopable {
     hasInitialized = false
   }
 
-  protected def onRemove()
+  protected def onRemove(): Unit = {}
 
 }

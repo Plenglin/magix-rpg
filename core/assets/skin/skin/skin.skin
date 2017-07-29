@@ -24,8 +24,8 @@
     fontCheckedOver: white
     fontDisabled: gray
 
-    hp: { r: 0.7, g: 0.0, b: 0.0, a: 1 },
-    mana: { r: 0.0, g: 0.0, b: 0.6, a: 1 },
+    hp: { r: 0.8, g: 0.15, b: 0.2, a: 1 },
+    mana: { r: 0.0, g: 0.3, b: 0.9, a: 1 },
 
   },
   com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
