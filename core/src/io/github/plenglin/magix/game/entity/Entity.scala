@@ -4,6 +4,7 @@ import java.util.logging.Logger
 
 import com.badlogic.gdx.math.Vector2
 import io.github.plenglin.magix.control.ControlLoop
+import io.github.plenglin.magix.game.EntityProperty
 import io.github.plenglin.magix.game.ability.player.PlayerAbility
 import io.github.plenglin.magix.game.effect.EntityEffect
 import io.github.plenglin.magix.game.event.entity.{EntityEvent, HealthChangeSource}
@@ -27,21 +28,44 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
   private val logger = Logger.getLogger(getClass.getName)
   var abilities: ListBuffer[PlayerAbility] = ListBuffer()
   val controlLoop = new ControlLoop()
-  def effects: ListBuffer[EntityEffect] = controlLoop.loopables.filter(_.isInstanceOf[EntityEffect]).map(_.asInstanceOf[EntityEffect])
+  def effects: mutable.Iterable[EntityEffect] = controlLoop.loopables.filter(_.isInstanceOf[EntityEffect]).map(_.asInstanceOf[EntityEffect])
   var eventQueue: mutable.Queue[EntityEvent] = mutable.Queue()
-  var speed: Float
+
+  private val baseProperties: mutable.Map[EntityProperty.Value, Double] = mutable.Map()
 
   val baseMana: Double = 0
   var mana: Double = _
   val baseManaRegen: Double = 0
 
-  val inventory: Inventory = _
+  var inventory: Inventory = _
 
   def manaRegen: Double = baseManaRegen * effects.map(_.coeffManaRegen).product + effects.map(_.addedManaRegen).sum
 
+  /**
+    * How stronk is it?
+    */
   var baseHP: Double
+
+  /**
+    * How quick can it regenerate?
+    */
   val baseHPRegen: Double = 0
   var hp: Double = _
+
+  /**
+    * How fast can this go?
+    */
+  protected val baseSpeed: Double
+
+  /**
+    * How much can it carry?
+    */
+  protected val baseCarryWeight: Double = 0
+
+  /**
+    * How much can it carry?
+    */
+  protected val baseCarryVolume: Double = 0
 
   override def hpRegen: Double = baseManaRegen * effects.map(_.coeffManaRegen).product + effects.map(_.addedManaRegen).sum
 
@@ -50,6 +74,12 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
   def init(): Unit = {
     hp = maxHP
     mana = maxMana
+    inventory = new Inventory(this)
+    baseProperties += (
+      EntityProperty.SPEED -> baseSpeed,
+      EntityProperty.CARRY_VOLUME -> baseCarryVolume,
+      EntityProperty.CARRY_WEIGHT -> baseCarryWeight
+    )
     onInit()
   }
 
@@ -94,6 +124,15 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
     }
   }
 
+  def getProperty(property: EntityProperty.Value): Double = {
+    val changes = effects.map(_.propertyModifications).toList  // A list of maps of changes
+    val coeff: List[Double] = changes.map(e => e.getOrElse(property, (1d, 0d))._1.asInstanceOf[Double])
+    val add: List[Double] = changes.map(e => e.getOrElse(property, (1d, 0d))._2.asInstanceOf[Double])
+    baseProperties(property) *
+      coeff.product +
+      add.sum
+  }
+
   /**
     * Called immediately before each event is processed.
     *
@@ -122,7 +161,7 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
   def moveTowardsTarget(dt: Float): Boolean = {
     val displacement = pos.cpy.sub(target)
     if (displacement.len2() >= Constants.movementThreshold2) {
-      displacement.nor.scl(-speed * dt)
+      displacement.nor.scl(-getProperty(EntityProperty.SPEED).toFloat * dt)
       pos.add(displacement)
       logger.finest(s"displacement: $displacement; magnitude: ${displacement.len()},new pos: $pos")
       return true

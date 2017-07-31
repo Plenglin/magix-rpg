@@ -1,13 +1,12 @@
 package io.github.plenglin.magix.game.effect
 
 import io.github.plenglin.magix.control.Loopable
+import io.github.plenglin.magix.game.EntityProperty
 import io.github.plenglin.magix.game.entity.Entity
 import io.github.plenglin.magix.game.event.entity.EntityEvent
 
 /**
   * An effect that can be applied to a `LivingEntity`.
-  *
-  * @param target the target entity
   */
 abstract class EntityEffect() extends Loopable {
 
@@ -18,6 +17,12 @@ abstract class EntityEffect() extends Loopable {
   val name: String
 
   val desc: String = ""
+
+  /**
+    * A map of modifications for each type of property. The first elements of each effect's map for this value is
+    * multiplied by the base value. After all multiplications are done, all second elements are added to the result.
+    */
+  val propertyModifications: Map[EntityProperty.Value, (Double, Double)] = Map()
 
   def addedArmor: Double = 0
 

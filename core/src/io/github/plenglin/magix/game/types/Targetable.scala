@@ -2,7 +2,7 @@ package io.github.plenglin.magix.game.types
 
 import com.badlogic.gdx.math.Vector2
 
-trait Targetable {
+trait Targetable extends Named {
 
   /**
     * How far from the mouse this object can be and still be flagged as targeted, in screen distance squared. 0 for non-
@@ -18,7 +18,5 @@ trait Targetable {
     * @return
     */
   def pos: Vector2
-
-  def name: String
 
 }

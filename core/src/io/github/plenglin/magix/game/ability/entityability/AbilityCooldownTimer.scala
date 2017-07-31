@@ -7,13 +7,15 @@ import io.github.plenglin.magix.game.event.entity.HealthChangeSource
 /**
   * A class for entity ability timing
   */
-class AbilityCooldownTimer(var source: Entity, override var name: String, var cooldown: Long,
+class AbilityCooldownTimer(var source: Entity, private val _name: String, var cooldown: Long,
                            var onActivate: (Entity, AbilityCooldownTimer) => Unit) extends HealthChangeSource {
 
   /**
     * The next time this ability can be activated, in milliseconds
     */
   var nextActivation: Long = 0
+
+  override def name: String = _name
 
   def this(source: Entity, name: String, cooldown: Long) = this(source, name, cooldown, (_, _) => {})
 

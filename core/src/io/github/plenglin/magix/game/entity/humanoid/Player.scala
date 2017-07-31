@@ -18,8 +18,8 @@ class Player(pos: Vector2) extends Entity(pos) with TexturedDrawable {
   override val center = true
   override val dimensions: Vector2 = new Vector2(1, 1)
   override var baseHP: Double = 100
-  override var speed: Float = 5
-  override var name: String = "Player"
+  override val baseSpeed: Double = 5
+  override def name: String = "Player"
 
   override def onInit(): Unit = {
     abilities += new MagicMissileAttack()

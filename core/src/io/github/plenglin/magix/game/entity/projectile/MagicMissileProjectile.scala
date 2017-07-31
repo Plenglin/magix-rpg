@@ -19,9 +19,9 @@ class MagicMissileProjectile(source: Entity, target: Damageable) extends HomingP
   override val dimensions: Vector2 = new Vector2(0.5f, 0.5f)
   private val logger = Logger.getLogger(getClass.getName)
   override var damage: Double = 10
-  override var speed: Float = 30
+  override val baseSpeed: Double = 30
   override var baseHP: Double = 30
-  override var name: String = "Magic Missile Projectile"
+  override def name: String = "Magic Missile Projectile"
   override var hitRadius2: Float = 1
 
   override def drawPos: Vector2 = pos

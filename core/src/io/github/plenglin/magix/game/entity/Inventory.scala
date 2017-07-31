@@ -4,7 +4,7 @@ import io.github.plenglin.magix.game.inventory.ItemStack
 
 import scala.collection.mutable.ListBuffer
 
-class Inventory(maxVolume: Double, maxWeight: Double) extends Iterable[ItemStack] {
+class Inventory(owner: Entity) extends Iterable[ItemStack] {
 
   private val items = ListBuffer[ItemStack]()
 

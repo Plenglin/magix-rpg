@@ -7,11 +7,9 @@ import io.github.plenglin.magix.game.inventory.{Item, ItemStack}
 
 class ItemStackEntity(pos: Vector2, val stack: ItemStack) extends Entity(pos) {
   val item: Item = stack.item
-
-  override var speed: Float = _
   override var baseHP: Double = _
 
-  override def name: String = ""
+  override def name: String = s"${stack.size}x${item.name}"
 
   /**
     * Used to determine layering.
@@ -40,4 +38,6 @@ class ItemStackEntity(pos: Vector2, val stack: ItemStack) extends Entity(pos) {
   override def draw(batch: SpriteBatch): Unit = {
 
   }
+
+  override protected val baseSpeed: Double = 0
 }

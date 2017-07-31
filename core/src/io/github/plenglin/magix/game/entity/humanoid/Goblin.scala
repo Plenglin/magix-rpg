@@ -22,8 +22,8 @@ class Goblin(pos: Vector2) extends Entity(pos) with TexturedDrawable {
   val melee = new AbilityCooldownTimer(this, "Scratch", 1000, EntityAbilities.meleeAttack(GameData.player, 5, 1))
   private val logger = Logger.getLogger(getClass.getName)
   override var baseHP: Double = 30
-  override var speed: Float = 4
-  override var name = "Goblin"
+  override val baseSpeed: Double = 4
+  override def name = "Goblin"
 
   override def textureRegion: TextureRegion = Assets.tGoblin
 

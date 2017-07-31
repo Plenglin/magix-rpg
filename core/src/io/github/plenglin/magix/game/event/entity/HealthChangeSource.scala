@@ -1,7 +1,7 @@
 package io.github.plenglin.magix.game.event.entity
 
-trait HealthChangeSource {
+import io.github.plenglin.magix.game.types.Named
 
-  var name: String
+trait HealthChangeSource extends Named {
 
 }
