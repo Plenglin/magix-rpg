@@ -9,6 +9,7 @@ import io.github.plenglin.magix.game.ability.player.PlayerAbility
 import io.github.plenglin.magix.game.effect.EntityEffect
 import io.github.plenglin.magix.game.event.entity.{EntityEvent, HealthChangeSource}
 import io.github.plenglin.magix.game.event.global.GlobalEvent
+import io.github.plenglin.magix.game.inventory.Inventory
 import io.github.plenglin.magix.game.types.Damageable
 import io.github.plenglin.magix.render.Drawable
 import io.github.plenglin.magix.{Constants, GameData}

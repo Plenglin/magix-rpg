@@ -3,7 +3,8 @@ package io.github.plenglin.magix.game.entity
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import io.github.plenglin.magix.game.inventory.{Item, ItemStack}
+import io.github.plenglin.magix.game.inventory.ItemStack
+import io.github.plenglin.magix.game.inventory.items.Item
 
 class ItemStackEntity(pos: Vector2, val stack: ItemStack) extends Entity(pos) {
   val item: Item = stack.item

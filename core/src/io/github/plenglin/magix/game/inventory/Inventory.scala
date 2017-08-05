@@ -1,14 +1,15 @@
-package io.github.plenglin.magix.game.entity
+package io.github.plenglin.magix.game.inventory
 
-import io.github.plenglin.magix.game.inventory.ItemStack
+import io.github.plenglin.magix.game.EntityProperty
+import io.github.plenglin.magix.game.entity.Entity
 
 import scala.collection.mutable.ListBuffer
 
 class Inventory(owner: Entity) extends Iterable[ItemStack] {
 
   private val items = ListBuffer[ItemStack]()
-
-  val totalVolume: Double = items.map(_.volume).sum
+  private val maxWeight = owner.getProperty(EntityProperty.CARRY_WEIGHT)
+  private val maxVolume = owner.getProperty(EntityProperty.CARRY_VOLUME)
   val totalWeight: Double = items.map(_.weight).sum
 
   def +=(itemStack: ItemStack): Unit = {

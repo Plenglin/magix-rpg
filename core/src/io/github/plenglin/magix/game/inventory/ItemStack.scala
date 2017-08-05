@@ -1,8 +1,8 @@
 package io.github.plenglin.magix.game.inventory
 
-class ItemStack(val item: Item, private var _size: Int) {
+import io.github.plenglin.magix.game.inventory.items.Item
 
-  def volume: Double = item.volume * size
+class ItemStack(val item: Item, private var _size: Int) {
 
   def weight: Double = item.weight * size
 
