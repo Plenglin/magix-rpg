@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE weaponList [
+        <!ELEMENT weaponList (meleeWeapon*, rangedWeapon*)>
+
+        <!ELEMENT rangedWeapon EMPTY>
+        
+        <!ELEMENT meleeWeapon EMPTY>
+        <!ATTLIST meleeWeapon name CDATA #REQUIRED>
+        <!ATTLIST meleeWeapon cost CDATA #REQUIRED>
+        <!ATTLIST meleeWeapon damage CDATA #REQUIRED>
+        <!ATTLIST meleeWeapon speed CDATA #REQUIRED>
+        <!ATTLIST meleeWeapon toughness CDATA #REQUIRED>
+        <!ATTLIST meleeWeapon range CDATA #REQUIRED>
+        <!ATTLIST meleeWeapon weight CDATA #REQUIRED>
+        ]>
+
+<weaponList>
+    <meleeWeapon name="dagger"      cost="200" damage="5"   speed="2.00"    toughness="250" range="0.5" weight="0.50"/>
+    <meleeWeapon name="shortsword"  cost="300" damage="10"  speed="1.25"    toughness="350" range="1"   weight="0.75"/>
+    <meleeWeapon name="rapier"      cost="300" damage="10"  speed="1.50"    toughness="350" range="2"   weight="1.00"/>
+    <meleeWeapon name="broadsword"  cost="500" damage="15"  speed="1.00"    toughness="550" range="1.5" weight="1.50"/>
+    <meleeWeapon name="longsword"   cost="500" damage="20"  speed="0.75"    toughness="500" range="2"   weight="1.50"/>
+    <meleeWeapon name="battleaxe"   cost="650" damage="30"  speed="0.5"     toughness="750" range="2"   weight="3"/>
+</weaponList>
