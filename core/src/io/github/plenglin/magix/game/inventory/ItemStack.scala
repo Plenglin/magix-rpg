@@ -9,10 +9,9 @@ class ItemStack(val item: Item, private var _size: Int) {
   def size: Int = _size
 
   def size_=(value: Int): Unit = {
-    if (value > item.stack || value < 1) {
-      throw new IllegalArgumentException
-    }
     _size = value
   }
+
+  def isEmpty: Boolean = size == 0
 
 }

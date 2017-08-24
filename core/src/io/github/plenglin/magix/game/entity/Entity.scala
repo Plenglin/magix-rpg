@@ -124,7 +124,6 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
     val changes = effects.map(_.propertyModifications).toList  // A list of maps of changes
     val coeff: List[Double] = changes.map(e => e.getOrElse(property, (1d, 0d))._1.asInstanceOf[Double])
     val add: List[Double] = changes.map(e => e.getOrElse(property, (1d, 0d))._2.asInstanceOf[Double])
-    println(this)
     baseProperties(property) *
       coeff.product +
       add.sum

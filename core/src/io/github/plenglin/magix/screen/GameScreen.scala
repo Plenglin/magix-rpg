@@ -2,7 +2,7 @@ package io.github.plenglin.magix.screen
 
 import java.util.logging.Logger
 
-import com.badlogic.gdx.Input.Buttons
+import com.badlogic.gdx.Input.{Buttons, Keys}
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.{GL20, OrthographicCamera}
 import com.badlogic.gdx.math.{Vector2, Vector3}
@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.{Gdx, InputProcessor, Screen}
 import io.github.plenglin.magix.game.ability.exception.AbilityFailureException
 import io.github.plenglin.magix.game.entity.humanoid.Goblin
+import io.github.plenglin.magix.game.inventory.ItemStack
+import io.github.plenglin.magix.game.inventory.items.Item
 import io.github.plenglin.magix.game.types.Damageable
 import io.github.plenglin.magix.ui.GameScreenHUD
 import io.github.plenglin.magix.game.world.terrain.TerrainDirt
@@ -35,9 +37,6 @@ class GameScreen extends Screen with InputProcessor {
     batch = new SpriteBatch()
     gameCam = new OrthographicCamera()
 
-    uiStage = new Stage(new ScreenViewport())
-    hud = new GameScreenHUD(uiStage, Assets.skinGame)
-
     logger.info("resetting game...")
     GameData.reset()
     GameData.world.doGeneration((w) => {
@@ -58,6 +57,13 @@ class GameScreen extends Screen with InputProcessor {
     }
 
     Gdx.input.setInputProcessor(this)
+
+    uiStage = new Stage(new ScreenViewport())
+    hud = new GameScreenHUD(uiStage, Assets.skinGame)
+
+    GameData.player.inventory += new ItemStack(new Item("foobar", 3), 10)
+    hud.inventoryPanel.updateTable()
+
   }
 
   override def render(delta: Float): Unit = {
@@ -122,7 +128,13 @@ class GameScreen extends Screen with InputProcessor {
   override def resume(): Unit = {}
 
   override def keyUp(keycode: Int): Boolean = {
-    false
+    keycode match {
+      case Keys.TAB =>
+        hud.inventoryPanel.setVisible(!hud.inventoryPanel.isVisible)
+        hud.inventoryPanel.updateTable()
+      case _ =>
+    }
+    true
   }
 
   override def keyTyped(character: Char): Boolean = {

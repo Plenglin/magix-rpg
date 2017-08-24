@@ -15,6 +15,13 @@ class Inventory(owner: Entity) extends Iterable[ItemStack] {
   }
 
   def +=(itemStack: ItemStack): Unit = {
+    for (i <- items) {
+      if (i.item == itemStack.item) {
+        i.size += itemStack.size
+        itemStack.size = 0
+        return
+      }
+    }
     items += itemStack
   }
 

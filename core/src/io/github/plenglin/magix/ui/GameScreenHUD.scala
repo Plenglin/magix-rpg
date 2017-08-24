@@ -18,6 +18,15 @@ class GameScreenHUD(stage: Stage, skin: Skin) {
   manaBar.setPosition(70, 10)
   stage.addActor(manaBar)
 
+  val inventoryPanel = new InventoryPanel(GameData.player.inventory, skin, "default")
+  inventoryPanel.setHeight(500)
+  inventoryPanel.setWidth(500)
+  inventoryPanel.setPosition(30, 200)
+  inventoryPanel.setVisible(false)
+  stage.addActor(inventoryPanel)
+
+  stage.setDebugAll(true)
+
   def update(): Unit = {
     hpBar.setRange(0, GameData.player.maxHP.toFloat)
     hpBar.setValue(GameData.player.hp.toFloat)
