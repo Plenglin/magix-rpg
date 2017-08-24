@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="materialList">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="material" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute name="name" type="xs:string" use="required"/>
+                        <xs:attribute name="cost" type="xs:decimal" use="required"/>
+                        <xs:attribute name="damage" type="xs:decimal" use="required"/>
+                        <xs:attribute name="flexibility" type="xs:decimal" use="required"/>
+                        <xs:attribute name="speed" type="xs:decimal" use="required"/>
+                        <xs:attribute name="toughness" type="xs:decimal" use="required"/>
+                        <xs:attribute name="weight" type="xs:decimal" use="required"/>
+                        <xs:attribute name="color" type="xs:string" default="FFFFFF"/>
+                        <xs:attribute name="attunement" type="xs:decimal" default="1.00"/>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

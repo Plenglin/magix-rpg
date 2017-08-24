@@ -8,9 +8,11 @@ import scala.collection.mutable.ListBuffer
 class Inventory(owner: Entity) extends Iterable[ItemStack] {
 
   private val items = ListBuffer[ItemStack]()
-  private val maxWeight = owner.getProperty(EntityProperty.CARRY_WEIGHT)
-  private val maxVolume = owner.getProperty(EntityProperty.CARRY_VOLUME)
+  private def maxWeight = owner.getProperty(EntityProperty.CARRY_WEIGHT)
   val totalWeight: Double = items.map(_.weight).sum
+
+  def initInventory(): Unit = {
+  }
 
   def +=(itemStack: ItemStack): Unit = {
     items += itemStack

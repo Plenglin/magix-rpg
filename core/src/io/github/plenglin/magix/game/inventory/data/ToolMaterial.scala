@@ -1,10 +1,11 @@
 package io.github.plenglin.magix.game.inventory.data
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 
 import scala.xml.XML
 
-case class ToolMaterial(name: String, cost: Double, damage: Double, speed: Double, toughness: Double, weight: Double, flexibility: Double, attunement: Double) {
+case class ToolMaterial(name: String, cost: Double, damage: Double, speed: Double, toughness: Double, weight: Double, flexibility: Double, attunement: Double, color: Color) {
 
 }
 
@@ -25,7 +26,8 @@ object ToolMaterial {
       (node \ "@toughness").toString.toDouble,
       (node \ "@weight").toString.toDouble,
       (node \ "@flexibility").toString.toDouble,
-      (node \ "@attunement").toString.toDouble
+      (node \ "@attunement").toString.toDouble,
+      new Color(Integer.parseInt((node \ "@color").toString, 16) << 8 | 0xff)
     )
 
 }

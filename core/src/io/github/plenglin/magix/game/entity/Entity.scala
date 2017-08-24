@@ -63,11 +63,6 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
     */
   protected val baseCarryWeight: Double = 0
 
-  /**
-    * How much can it carry?
-    */
-  protected val baseCarryVolume: Double = 0
-
   override def hpRegen: Double = baseManaRegen * effects.map(_.coeffManaRegen).product + effects.map(_.addedManaRegen).sum
 
   override def armor: Double = baseArmor + effects.map(_.addedArmor).sum
@@ -78,9 +73,9 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
     inventory = new Inventory(this)
     baseProperties += (
       EntityProperty.SPEED -> baseSpeed,
-      EntityProperty.CARRY_VOLUME -> baseCarryVolume,
       EntityProperty.CARRY_WEIGHT -> baseCarryWeight
     )
+    inventory.initInventory()
     onInit()
   }
 
@@ -129,6 +124,7 @@ abstract class Entity(var pos: Vector2) extends HealthChangeSource with Damageab
     val changes = effects.map(_.propertyModifications).toList  // A list of maps of changes
     val coeff: List[Double] = changes.map(e => e.getOrElse(property, (1d, 0d))._1.asInstanceOf[Double])
     val add: List[Double] = changes.map(e => e.getOrElse(property, (1d, 0d))._2.asInstanceOf[Double])
+    println(this)
     baseProperties(property) *
       coeff.product +
       add.sum
