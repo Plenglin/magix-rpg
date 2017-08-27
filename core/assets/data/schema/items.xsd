@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="base.xsd"/>
+
+    <xs:element name="itemList">
+
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="item" maxOccurs="unbounded">
+
+                    <xs:complexType>
+
+                        <xs:sequence>
+                            <xs:element name="texture" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="tooltip" minOccurs="0" maxOccurs="1">
+                                <xs:complexType>
+                                    <xs:all>
+                                        <xs:element name="row" minOccurs="1"/>
+                                    </xs:all>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+
+                        <xs:attribute name="id" type="id" use="required"/>
+                        <xs:attribute name="weight" type="xs:double" default="1"/>
+                        <xs:attribute name="category" type="xs:string" default="misc"/>
+                        <xs:attribute name="cost" type="xs:unsignedInt" default="1"/>
+
+                    </xs:complexType>
+
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+
+    </xs:element>
+
+</xs:schema>

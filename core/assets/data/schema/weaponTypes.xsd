@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+    <xs:include schemaLocation="base.xsd"/>
+
     <xs:element name="weaponList">
         <xs:complexType>
             <xs:sequence>
@@ -8,9 +10,9 @@
                 <xs:element name="meleeWeapon" maxOccurs="unbounded">
                     <xs:complexType>
 
-                        <xs:sequence>
-                            <xs:element name="texture" type="xs:string" minOccurs="0" maxOccurs="1" default="item/dagger.png"/>
-                        </xs:sequence>
+                        <xs:all>
+                            <xs:element ref="texture" minOccurs="0" maxOccurs="1"/>
+                        </xs:all>
 
                         <xs:attribute name="name" type="xs:string"/>
                         <xs:attribute name="cost" type="xs:decimal"/>

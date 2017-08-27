@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+    <xs:include schemaLocation="base.xsd"/>
+
     <xs:element name="materialList">
         <xs:complexType>
             <xs:sequence>
@@ -14,7 +16,7 @@
                         <xs:attribute name="speed" type="xs:decimal" use="required"/>
                         <xs:attribute name="toughness" type="xs:decimal" use="required"/>
                         <xs:attribute name="weight" type="xs:decimal" use="required"/>
-                        <xs:attribute name="color" type="xs:string" default="FFFFFF"/>
+                        <xs:attribute name="color" type="color" use="optional" default="FFFFFF"/>
                         <xs:attribute name="attunement" type="xs:decimal" default="1.00"/>
                     </xs:complexType>
                 </xs:element>
