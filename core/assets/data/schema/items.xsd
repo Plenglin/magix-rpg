@@ -24,7 +24,7 @@
                             </xs:element>
                         </xs:sequence>
 
-                        <xs:attribute name="id" type="id" use="required"/>
+                        <xs:attribute name="itemId" type="id" use="required"/>
                         <xs:attribute name="weight" type="xs:double" default="1"/>
                         <xs:attribute name="category" type="xs:string" default="misc"/>
                         <xs:attribute name="cost" type="xs:unsignedInt" default="1"/>

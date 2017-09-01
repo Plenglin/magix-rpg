@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <itemList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/items.xsd">
-    <item id="genericMeleeWeapon"/>
-    <item id="genericIngot"/>
+    <item itemId="genericMeleeWeapon"/>
+    <item itemId="genericIngot"/>
 
-    <item id="coin" cost="1"/>
-    <item id="wood" cost="2"/>
-    <item id="goldNugget" cost="10"/>
+    <item itemId="coin" cost="1"/>
+    <item itemId="wood" cost="2"/>
+    <item itemId="goldNugget" cost="10"/>
 </itemList>

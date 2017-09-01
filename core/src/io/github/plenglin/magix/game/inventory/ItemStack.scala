@@ -1,6 +1,6 @@
 package io.github.plenglin.magix.game.inventory
 
-import io.github.plenglin.magix.game.inventory.items.Item
+import io.github.plenglin.magix.game.items.Item
 
 class ItemStack(val item: Item, private var _size: Int) {
 

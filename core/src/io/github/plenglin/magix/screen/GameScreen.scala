@@ -14,7 +14,7 @@ import com.badlogic.gdx.{Gdx, InputProcessor, Screen}
 import io.github.plenglin.magix.game.ability.exception.AbilityFailureException
 import io.github.plenglin.magix.game.entity.humanoid.Goblin
 import io.github.plenglin.magix.game.inventory.ItemStack
-import io.github.plenglin.magix.game.inventory.items.Item
+import io.github.plenglin.magix.game.items.Item
 import io.github.plenglin.magix.game.types.Damageable
 import io.github.plenglin.magix.ui.GameScreenHUD
 import io.github.plenglin.magix.game.world.terrain.TerrainDirt
